@@ -48,6 +48,5 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-        //cap nhat
     }
 }
