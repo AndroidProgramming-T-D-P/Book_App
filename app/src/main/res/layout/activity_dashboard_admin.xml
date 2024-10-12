@@ -44,6 +44,17 @@
             android:background="@android:color/transparent"/>
     </RelativeLayout>
 
+    <!--Categories-->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/categoriesRv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:listitem="@layout/row_category"
+        android:layout_margin="5dp"
+        android:layout_below="@+id/toolbarRl"
+        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"/>
+        <!--android:layout_above="@+id/bottomLL"-->
+
     <!--Add Category-->
     <LinearLayout
         android:layout_width="match_parent"
