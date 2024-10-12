@@ -1,7 +1,9 @@
 package com.example.bookapp;
 
+import android.content.Intent;
 import android.os.Bundle;
-
+import android.view.View;
+import android.widget.Button;
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
@@ -10,9 +12,12 @@ import androidx.core.view.WindowInsetsCompat;
 
 public class DashboardAdminActivity extends AppCompatActivity {
 
+    private Button btnaddcategory;
+    private Button btnaddpdf;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_dashboard_admin);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
@@ -20,5 +25,14 @@ public class DashboardAdminActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+        btnaddcategory =(Button) findViewById(R.id.addCategoryBtn);
+        btnaddcategory.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent insets = new Intent(DashboardAdminActivity.this, CategoryAddActivity.class);
+            }
+        });
+        //handle click, start category and screen
+
     }
 }
