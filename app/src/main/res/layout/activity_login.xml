@@ -47,7 +47,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 app:hintEnabled="false">
-                
+
                 <EditText
                     android:id="@+id/emailEt"
                     android:layout_width="match_parent"
@@ -59,7 +59,8 @@
                     android:inputType="textEmailAddress"
                     android:padding="10dp"
                     android:textColor="@color/black"
-                    android:textColorHint="@color/gray01"/>
+                    android:textColorHint="@color/gray01"
+                    tools:ignore="TouchTargetSizeCheck" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <!--Password-->
@@ -81,9 +82,10 @@
                     android:drawablePadding="10dp"
                     android:hint="Password"
                     android:inputType="textPassword"
+                    android:minHeight="48dp"
                     android:padding="10dp"
                     android:textColor="@color/black"
-                    android:textColorHint="@color/gray01"/>
+                    android:textColorHint="@color/gray01" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <!--Forgot Password-->
@@ -100,7 +102,7 @@
                 android:textColor="@color/gray02"/>
 
             <!--Login Button-->
-            <Button
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/loginBtn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
