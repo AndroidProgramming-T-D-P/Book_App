@@ -1,9 +1,7 @@
 package com.example.bookapp;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
 
@@ -13,7 +11,8 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-import com.example.bookapp.databinding.ActivityMainBinding;
+import UserInterface.DashboardUserActivity;
+import UserInterface.UserMainActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -24,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
     private  Button btnskiplogin;
 
 
+    private Button btntestUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,5 +56,17 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         //cap nhat
+
+
+
+        //Text Giao dien User
+        btntestUser = (Button) findViewById(R.id.button2);
+        btntestUser.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, UserMainActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 }
