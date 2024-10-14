@@ -1,50 +1,39 @@
 package com.example.bookapp;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
+
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-public class DashboardAdminActivity extends AppCompatActivity {
+import com.example.bookapp.databinding.ActivityPdfAddBinding;
 
-    private Button btnaddcategory;
-    private Button btnaddpdf;
+public class PdfAddActivity extends AppCompatActivity {
+
+    private ActivityPdfAddBinding binding;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_dashboard_admin);
+        setContentView(R.layout.activity_pdf_add);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-        btnaddcategory =(Button) findViewById(R.id.addCategoryBtn);
-        btnaddcategory.setOnClickListener(new View.OnClickListener() {
+        binding = ActivityPdfAddBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+
+
+        //handle click, go to previous activity
+        binding.backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent insets = new Intent(DashboardAdminActivity.this, CategoryAddActivity.class);
+                onBackPressed();
             }
         });
-
-        //handle click, start pdf and screen
-
-
-        btnaddpdf.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent insets = new Intent(DashboardAdminActivity.this, PdfAddActivity.class);
-            }
-        });
-
-
-        //handle click, start category and screen
-
     }
 }
