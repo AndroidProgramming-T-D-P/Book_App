@@ -29,8 +29,9 @@
             android:exported="false"></activity>
         <activity android:name=".LoginActivity"></activity>
         <activity android:name=".DashboardAdminActivity" />
-        <activity android:name=".DashboardUserActivity" />
+        <activity android:name="UserInterface.DashboardUserActivity" />
         <activity android:name=".RegisterActivity" />
+        <activity android:name="UserInterface.UserMainActivity" />
     </application>
 
 </manifest>

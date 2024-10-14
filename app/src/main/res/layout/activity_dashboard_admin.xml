@@ -32,16 +32,17 @@
             android:layout_below="@+id/titleTv"
             android:text="abc@example,com"
             android:textColor="@color/white"/>
-        
+
         <ImageButton
             android:id="@+id/logoutBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:src="@drawable/ic_logout_white"
             android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
             android:layout_marginEnd="10dp"
-            android:background="@android:color/transparent"/>
+            android:background="@android:color/transparent"
+            android:src="@drawable/ic_logout_white"
+            tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
     </RelativeLayout>
 
     <!--Categories-->
@@ -78,14 +79,14 @@
     </Button>
 
     <!--Add PDF-->
-    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-        android:id="@+id/addPdfFab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_pdf_add_white"
-        app:tint="@color/white"
-        app:fabCustomSize="50dp"
-        app:backgroundTint="@color/MauXanhNgoc"
-        />
+        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+            android:id="@+id/addPdfFab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_pdf_add_white"
+            app:backgroundTint="@color/MauXanhNgoc"
+            app:fabCustomSize="50dp"
+            app:tint="@color/white"
+            tools:ignore="SpeakableTextPresentCheck" />
     </LinearLayout>
 </RelativeLayout>
