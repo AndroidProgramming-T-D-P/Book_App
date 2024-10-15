@@ -34,6 +34,7 @@
             android:name=".MainActivity"
             android:exported="false" />
         <activity android:name=".LoginActivity" />
+        <activity android:name=".ForgotPasswordActivity" />
         <activity android:name=".DashboardAdminActivity" />
         <activity android:name="UserInterface.DashboardUserActivity" />
         <activity android:name="UserInterface.UserMainActivity" />
