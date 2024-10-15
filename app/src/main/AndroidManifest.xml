@@ -13,6 +13,9 @@
         android:theme="@style/Theme.MaterialComponents.Light.NoActionBar"
         tools:targetApi="31">
         <activity
+            android:name="UserInterface.ProfileEditActivity"
+            android:exported="false" />
+        <activity
             android:name=".PdfListAdminActivity"
             android:exported="false" />
         <activity
@@ -38,6 +41,9 @@
         <activity android:name=".DashboardAdminActivity" />
         <activity android:name="UserInterface.DashboardUserActivity" />
         <activity android:name="UserInterface.UserMainActivity" />
+        <activity
+            android:name="UserInterface.ProfileUserActivity"
+            tools:ignore="MissingClass" />
         <activity android:name=".RegisterActivity" />
     </application>
 

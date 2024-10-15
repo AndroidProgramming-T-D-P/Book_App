@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
@@ -8,15 +8,24 @@
     android:orientation="vertical"
     tools:context="UserInterface.UserMainActivity">
 
+    <!--
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/viewPagerUser"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"/>
+        android:layout_height="match_parent"
+        android:layout_above="@+id/bottomNavMainUser"/>
+        -->
+
+    <FrameLayout
+        android:id="@+id/Fragment_Main_User"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/bottomNavMainUser"/>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavMainUser"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:menu="@menu/bottom_nav_menu"/>
-</LinearLayout>
+        app:menu="@menu/bottom_nav_menu"
+        android:layout_alignParentBottom="true"/>
+</RelativeLayout>
