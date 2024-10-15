@@ -6,6 +6,7 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +20,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.bookapp.MyApplication;
+import com.example.bookapp.PdfDetailActivity;
 import com.example.bookapp.databinding.RowPdfAdminBinding;
 import com.example.bookapp.models.ModelPdf;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -74,6 +76,7 @@ public class AdapterPdfAdmin extends RecyclerView.Adapter<AdapterPdfAdmin.Holder
 
         //get data
         ModelPdf model = pdfArrayList.get(position);
+        String pdfId = model.getId();
         String title = model.getTitle();
         String description = model.getDescription();
         long timestamp = model.getTimestamp();
@@ -96,6 +99,16 @@ public class AdapterPdfAdmin extends RecyclerView.Adapter<AdapterPdfAdmin.Holder
             @Override
             public void onClick(View view) {
                 moreOptionDialog(model, holder);
+            }
+        });
+
+        //handle item click, open PdfDetailActivity activity
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, PdfDetailActivity.class);
+                intent.putExtra("bookId", pdfId);
+                context.startActivity(intent);
             }
         });
     }

@@ -1,5 +1,6 @@
 package com.example.bookapp;
 
+import android.annotation.SuppressLint; //Tuan
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -24,7 +25,9 @@ public class MainActivity extends AppCompatActivity {
 
 
     private Button btntestUser;
+    private Button btnTuan;
 
+    @SuppressLint("MissingInflatedId") //Tuan
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,6 +68,16 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this, UserMainActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        //Text Giao dien cua Tuan
+        btnTuan = (Button) findViewById(R.id.btnOfTuan);
+        btnTuan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, PdfDetailActivity.class);
                 startActivity(intent);
             }
         });
