@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Patterns;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -16,11 +17,16 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.example.bookapp.databinding.ActivityLoginBinding;
 
+import UserInterface.UserMainActivity;
+
 
 public class LoginActivity extends AppCompatActivity {
 
     //view binding
     private ActivityLoginBinding binding;
+
+    private Button btnUser;
+    private Button btnAdmin;
 
     //firebase auth
 
@@ -71,6 +77,26 @@ public class LoginActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+//        btnUser = (Button) findViewById(R.id.userLogin);
+//        btnAdmin = (Button) findViewById(R.id.adminLogin);
+//
+//        btnUser.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent = new Intent(LoginActivity.this, UserMainActivity.class);
+//                startActivity(intent);
+//            }
+//        });
+//
+//        btnAdmin.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent = new Intent(LoginActivity.this, DashboardAdminActivity.class);
+//                startActivity(intent);
+//            }
+//        });
+
     }
 
     private String email = "", password = "";

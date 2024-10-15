@@ -25,7 +25,7 @@ public class DashboardAdminActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-        btnaddcategory =(Button) findViewById(R.id.addCategoryBtn);
+        btnaddcategory = (Button) findViewById(R.id.addCategoryBtn);
         btnaddcategory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -35,7 +35,7 @@ public class DashboardAdminActivity extends AppCompatActivity {
 
         //handle click, start pdf and screen
 
-
+        btnaddpdf = (Button) findViewById(R.id.addPdfFab);
         btnaddpdf.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
