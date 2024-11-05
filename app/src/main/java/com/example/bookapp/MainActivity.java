@@ -77,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
         btnTuan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, DashboardAdminActivity.class);
+                Intent intent = new Intent(MainActivity.this, PdfDetailActivity.class);
                 startActivity(intent);
             }
         });
