@@ -57,7 +57,7 @@
         android:layout_marginEnd="30dp"
         android:layout_marginTop="225dp">
 
-        <EditText
+        <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/categoryEt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

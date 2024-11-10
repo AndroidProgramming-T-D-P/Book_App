@@ -29,7 +29,8 @@ public class DashboardAdminActivity extends AppCompatActivity {
         btnaddcategory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent insets = new Intent(DashboardAdminActivity.this, CategoryAddActivity.class);
+                Intent categoryIntent = new Intent(DashboardAdminActivity.this, CategoryAddActivity.class);
+                startActivity(categoryIntent);
             }
         });
 

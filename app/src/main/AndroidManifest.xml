@@ -39,6 +39,7 @@
         <activity android:name=".LoginActivity" />
         <activity android:name=".ForgotPasswordActivity" />
         <activity android:name=".DashboardAdminActivity" />
+        <activity android:name=".CategoryAddActivity" />
         <activity android:name="UserInterface.DashboardUserActivity" />
         <activity android:name="UserInterface.UserMainActivity" />
         <activity

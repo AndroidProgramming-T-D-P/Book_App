@@ -1,0 +1,437 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#000000">
+
+    <!-- Nút quay lại -->
+    <ImageView
+        android:id="@+id/backButton"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_margin="16dp"
+        android:layout_alignParentStart="true"
+        android:src="@drawable/ic_back_white" />
+
+    <!-- Nút chia sẻ -->
+    <ImageView
+        android:id="@+id/shareButton"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_margin="16dp"
+        android:layout_alignParentEnd="true"
+        android:src="@drawable/ic_share" />
+
+    <!-- Hình bìa sách -->
+    <ImageView
+        android:id="@+id/bookCover"
+        android:layout_width="200dp"
+        android:layout_height="280dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="48dp"
+        android:src="@drawable/book_review" />
+
+    <!-- Tên sách -->
+    <TextView
+        android:id="@+id/bookTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/bookCover"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp"
+        android:text="Thực vật và nấm"
+        android:textColor="#FFFFFF"
+        android:textSize="24sp"
+        android:textStyle="bold" />
+
+    <!-- Tác giả -->
+    <TextView
+        android:id="@+id/author"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/bookTitle"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="8dp"
+        android:text="Tác giả: Nguyễn Thành Phát"
+        android:textColor="#CCCCCC"
+        android:textSize="14sp" />
+
+    <!-- Nút Đọc Sách -->
+    <Button
+        android:id="@+id/readButton"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/author"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp"
+        android:backgroundTint="#00BFA5"
+        android:text="ĐỌC SÁCH"
+        android:textColor="#FFFFFF" />
+
+    <!-- Đánh giá sao và lượt xem -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/readButton"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="10dp"
+        android:orientation="horizontal">
+
+        <!-- Icon sao -->
+        <ImageView
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:src="@drawable/ic_star_filled" />
+
+        <!-- Đánh giá sao -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:text="5.0/5"
+            android:textColor="#FFFFFF"
+            android:textSize="14sp" />
+
+        <!-- Lượt xem -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="2,400"
+            android:textColor="#FFFFFF"
+            android:textSize="14sp" />
+
+        <!-- Icon mắt -->
+        <ImageView
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:layout_marginStart="4dp"
+            android:src="@drawable/ic_eye" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingStart="125dp">
+            <!-- Icon trái tim -->
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginStart="16dp"
+                android:src="@drawable/ic_heart" />
+
+            <!-- Icon tải xuống -->
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginStart="16dp"
+                android:src="@drawable/ic_download" />
+
+            <!-- Icon dấu ba chấm -->
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginStart="16dp"
+                android:src="@drawable/ic_more" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- Phần đánh giá của độc giả -->
+    <LinearLayout
+        android:id="@+id/ratingHeader"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/readButton"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="16dp"
+        android:orientation="horizontal">
+
+        <!-- Đánh giá chi tiết -->
+        <TextView
+            android:id="@+id/docgiadanhgia"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:text="Độc giả đánh giá"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/start5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ratingHeader">
+
+        <!-- Văn bản "5/5" -->
+        <TextView
+            android:id="@+id/ratingText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="10dp"
+            android:text="5/5"
+            android:textColor="#FFFFFF"
+            android:textSize="14sp" />
+
+        <!-- Các ngôi sao -->
+        <ImageView
+            android:id="@+id/star1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/ratingText"
+            android:layout_marginStart="4dp"
+            android:src="@drawable/ic_star_filled" />
+
+        <ImageView
+            android:id="@+id/star2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/star1"
+            android:layout_marginStart="4dp"
+            android:src="@drawable/ic_star_filled" />
+
+        <ImageView
+            android:id="@+id/star3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/star2"
+            android:layout_marginStart="4dp"
+            android:src="@drawable/ic_star_filled" />
+
+        <ImageView
+            android:id="@+id/star4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/star3"
+            android:layout_marginStart="4dp"
+            android:src="@drawable/ic_star_filled" />
+
+        <ImageView
+            android:id="@+id/star5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/star4"
+            android:layout_marginStart="4dp"
+            android:src="@drawable/ic_star_filled" />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="250dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:background="@drawable/shape_button_border"
+            android:padding="8dp">
+
+            <!-- Icon Đánh giá -->
+            <ImageView
+                android:id="@+id/button_danhgia"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginEnd="8dp"
+            android:src="@drawable/ic_edit_danhgia" />
+
+            <!-- Chữ Đánh giá -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Đánh giá"
+                android:textColor="#FFFFFF"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/danhgia01"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/start5"
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:orientation="horizontal">
+
+        <!-- Avatar người dùng -->
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/user_icon_profile" />
+
+        <!-- Nội dung đánh giá -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:layout_marginStart="8dp">
+
+            <!-- Tên người dùng và đánh giá -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Đình Tuấn"
+                android:textColor="#FFFFFF"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Sách rất hay!!"
+                android:textColor="#CCCCCC"
+                android:textSize="14sp" />
+
+            <!-- Ngày đánh giá -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="30/09/2024"
+                android:textColor="#CCCCCC"
+                android:textSize="12sp" />
+
+            <!-- Các ngôi sao -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+            <ImageView
+                android:id="@+id/star01"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@id/ratingText"
+                android:layout_marginStart="4dp"
+                android:src="@drawable/ic_star_filled" />
+
+            <ImageView
+                android:id="@+id/star02"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@id/star1"
+                android:layout_marginStart="4dp"
+                android:src="@drawable/ic_star_filled" />
+
+            <ImageView
+                android:id="@+id/star03"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@id/star2"
+                android:layout_marginStart="4dp"
+                android:src="@drawable/ic_star_filled" />
+
+            <ImageView
+                android:id="@+id/star04"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@id/star3"
+                android:layout_marginStart="4dp"
+                android:src="@drawable/ic_star_filled" />
+
+            <ImageView
+                android:id="@+id/star05"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@id/star4"
+                android:layout_marginStart="4dp"
+                android:src="@drawable/ic_star_filled" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/danhgia02"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/danhgia01"
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:orientation="horizontal">
+
+        <!-- Avatar người dùng -->
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/user_icon_profile" />
+
+        <!-- Nội dung đánh giá -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:layout_marginStart="8dp">
+
+            <!-- Tên người dùng và đánh giá -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tấn Dũng"
+                android:textColor="#FFFFFF"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Sách hay!!"
+                android:textColor="#CCCCCC"
+                android:textSize="14sp" />
+
+            <!-- Ngày đánh giá -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="30/09/2024"
+                android:textColor="#CCCCCC"
+                android:textSize="12sp" />
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:id="@+id/star11"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@id/ratingText"
+                    android:layout_marginStart="4dp"
+                    android:src="@drawable/ic_star_filled" />
+
+                <ImageView
+                    android:id="@+id/star12"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@id/star1"
+                    android:layout_marginStart="4dp"
+                    android:src="@drawable/ic_star_filled" />
+
+                <ImageView
+                    android:id="@+id/star13"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@id/star2"
+                    android:layout_marginStart="4dp"
+                    android:src="@drawable/ic_star_filled" />
+
+                <ImageView
+                    android:id="@+id/star14"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@id/star3"
+                    android:layout_marginStart="4dp"
+                    android:src="@drawable/ic_star_filled" />
+
+                <ImageView
+                    android:id="@+id/star15"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@id/star4"
+                    android:layout_marginStart="4dp"
+                    android:src="@drawable/ic_star_filled" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+</RelativeLayout>
