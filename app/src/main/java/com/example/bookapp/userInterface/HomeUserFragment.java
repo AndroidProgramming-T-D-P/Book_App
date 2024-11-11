@@ -17,6 +17,7 @@ import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 
 import com.example.bookapp.R;
@@ -152,6 +153,26 @@ public class HomeUserFragment extends Fragment {
         //them deer test
         itemBookAdapter adapter2 = new itemBookAdapter(mListPhoTo);
         recyclerView2.setAdapter(adapter2);
+
+
+        // Thê Loại sách
+        ImageButton menuButton = view.findViewById(R.id.left_image);
+        menuButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showTheLoaiFragment();
+            }
+        });
+
+        //Search Sách
+        ImageButton searchButton = view.findViewById(R.id.right_image);
+        searchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showSearchFragment();
+            }
+        });
+
         return view;
     }
 
@@ -189,6 +210,24 @@ public class HomeUserFragment extends Fragment {
         list.add(new Photo(R.drawable.img_9,"sách 10"));
 
         return list;
+    }
+
+    //The loại sách
+    private void showTheLoaiFragment(){
+        TheLoaiSachUserFragment theLoaiSachUserFragment = new TheLoaiSachUserFragment();
+        requireActivity().getSupportFragmentManager().beginTransaction()
+                .replace(R.id.view_pager_trangchu, theLoaiSachUserFragment)
+                .addToBackStack(null)
+                .commit();
+    }
+
+    //Search Sách
+    private void showSearchFragment(){
+        SearchFragment searchFragment = new SearchFragment();
+        requireActivity().getSupportFragmentManager().beginTransaction()
+                .replace(R.id.view_pager_trangchu, searchFragment)
+                .addToBackStack(null)
+                .commit();
     }
 
     //luu hanh dong truoc khi thoat
