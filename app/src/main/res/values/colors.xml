@@ -12,4 +12,6 @@
     <color name="gray01">#c5c5c5</color>
     <color name="gray02">#777777</color>
     <color name="gray03">#EDEDED</color>
+    <color name="primary_color">#36a38e</color>
+    <color name="titleBook_color">#949494</color>
 </resources>
