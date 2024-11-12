@@ -21,7 +21,7 @@
 
         <!-- Nút Quay lại -->
         <ImageButton
-            android:id="@+id/backButton"
+            android:id="@+id/backButtonThietLapMucTieu"
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:background="#12b886"

@@ -1,6 +1,8 @@
 package com.example.bookapp.userInterface;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.NumberPicker;
@@ -41,6 +43,15 @@ public class ThietLap extends AppCompatActivity {
         btnXong.setOnClickListener(view -> {
             int selectedValue = numberPicker.getValue(); // Lấy giá trị hiện tại của NumberPicker
             txtMT.setText("Bạn còn " + selectedValue + " phút nữa để đạt mục tiêu"); // Cập nhật TextView
+        });
+
+        btnBack = findViewById(R.id.backButtonThietLapMucTieu);
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(ThietLap.this, TrangChuUser.class);
+                startActivity(intent);
+            }
         });
 
     }

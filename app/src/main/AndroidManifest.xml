@@ -30,6 +30,9 @@
             android:name=".userInterface.ReviewBookActivity"
             android:exported="false" />
         <activity
+            android:name=".userInterface.ThietLap"
+            android:exported="false" />
+        <activity
             android:name=".userInterface.ViewBookActivity"
             android:exported="false" />
         <activity

@@ -1,5 +1,6 @@
 package com.example.bookapp.userInterface;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -7,6 +8,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import com.example.bookapp.R;
 
@@ -16,6 +18,8 @@ import com.example.bookapp.R;
  * create an instance of this fragment.
  */
 public class ProfileUserFragment extends Fragment {
+
+    private LinearLayout linearLayout;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -61,6 +65,15 @@ public class ProfileUserFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_profile_user, container, false);
+        View view = inflater.inflate(R.layout.fragment_profile_user, container, false);
+        linearLayout = view.findViewById(R.id.thietLapMucTieu);
+        linearLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), ThietLap.class);
+                startActivity(intent);
+            }
+        });
+        return view;
     }
 }
