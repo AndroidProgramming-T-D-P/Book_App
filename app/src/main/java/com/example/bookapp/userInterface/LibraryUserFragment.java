@@ -86,7 +86,9 @@ public class LibraryUserFragment extends Fragment {
         //Danh sach mau
         list = new ArrayList<>();
         list.add(new Photo(R.drawable.img_1,""));
-        list.add(new Photo(R.drawable.img_1,""));
+        loadContinueReadingBook(list);
+//        list.add(new Photo(R.drawable.img_1,""));
+//        list.add(new Photo(R.drawable.img_1,""));
 
         adapter = new itemBookAdapter(getContext(), list);
         recyclerView.setAdapter(adapter);
@@ -97,11 +99,14 @@ public class LibraryUserFragment extends Fragment {
             public void onTabSelected(TabLayout.Tab tab) {
                 int position = tab.getPosition();
                 if(position == 0){
-                    loadContinueReadingBook();
+                    loadContinueReadingBook(list);
+                    adapter.notifyDataSetChanged();
                 } else if(position == 1) {
-                    loadfavouriteBook();
+                    loadfavouriteBook(list);
+                    adapter.notifyDataSetChanged();
                 } else if(position == 2) {
-                    loadDownLoadBook();
+                    loadDownLoadBook(list);
+                    adapter.notifyDataSetChanged();
                 }
             }
 
@@ -118,17 +123,17 @@ public class LibraryUserFragment extends Fragment {
         return view;
     }
     @SuppressLint("NotifyDataSetChanged")
-    private void loadContinueReadingBook(){
+    private void loadContinueReadingBook(List<Photo> list){
         list.clear();
 
         list.add(new Photo(R.drawable.img_8, "Sach 1"));
         list.add(new Photo(R.drawable.img_7, "Sach 2"));
         list.add(new Photo(R.drawable.img_2, "Sach 3"));
 
-        adapter.notifyDataSetChanged();
+
     }
     @SuppressLint("NotifyDataSetChanged")
-    private void loadfavouriteBook(){
+    private void loadfavouriteBook(List<Photo> list){
         list.clear();
 
         list.add(new Photo(R.drawable.img_6, "Sach 1"));
@@ -143,17 +148,14 @@ public class LibraryUserFragment extends Fragment {
         list.add(new Photo(R.drawable.img_7, "Sach 10"));
         list.add(new Photo(R.drawable.img_10, "Sach 11"));
         list.add(new Photo(R.drawable.img_3, "Sach 12"));
-
-        adapter.notifyDataSetChanged();
     }
     @SuppressLint("NotifyDataSetChanged")
-    private void loadDownLoadBook(){
+    private void loadDownLoadBook(List<Photo> list){
         list.clear();
 
         list.add(new Photo(R.drawable.img_3, "Sach 1"));
         list.add(new Photo(R.drawable.img_4, "Sach 2"));
         list.add(new Photo(R.drawable.img_5, "Sach 3"));
 
-        adapter.notifyDataSetChanged();
     }
 }

@@ -173,7 +173,18 @@ public class HomeUserFragment extends Fragment {
             }
         });
 
+        //Click sách
+        itemBookAdapter adapter3 = new itemBookAdapter(mListPhoTo, this::onItemClick);
+        recyclerView1.setAdapter(adapter3);
+
         return view;
+    }
+
+    //Click sách
+    public void onItemClick(int bookId) {
+        if (getActivity() instanceof TrangChuUser) {
+            ((TrangChuUser) getActivity()).showViewBookFragment(bookId);
+        }
     }
 
     private List<Photo> getListPhoto(){
@@ -226,6 +237,15 @@ public class HomeUserFragment extends Fragment {
         SearchFragment searchFragment = new SearchFragment();
         requireActivity().getSupportFragmentManager().beginTransaction()
                 .replace(R.id.view_pager_trangchu, searchFragment)
+                .addToBackStack(null)
+                .commit();
+    }
+
+    //viewBook
+    private void showViewBookFragment(int bookId){
+        ViewBookFragment viewBookFragment = ViewBookFragment.newInstance(bookId);
+        requireActivity().getSupportFragmentManager().beginTransaction()
+                .replace(R.id.view_pager_trangchu, viewBookFragment)
                 .addToBackStack(null)
                 .commit();
     }

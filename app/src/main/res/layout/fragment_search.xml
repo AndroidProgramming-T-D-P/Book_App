@@ -64,10 +64,39 @@
         android:layout_marginRight="16dp"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
+
+
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:background="@drawable/bg_search_box"
+                android:gravity="center_vertical"
+                android:padding="10dp">
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/ic_search_fragmentsearch"/>
+
+                <EditText
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/edit_text_search"
+                    android:hint="Tên sách, tác giả, tuyển tập..."
+                    android:inputType="text"
+                    android:textColor="@color/white"
+                    android:textColorHint="#959597"
+                    tools:ignore="TouchTargetSizeCheck" />
+
+            </LinearLayout>
 
             <!-- Lịch sử tìm kiếm với nút xóa -->
             <LinearLayout
@@ -77,7 +106,7 @@
                 android:orientation="horizontal"
                 android:gravity="center_vertical"
                 android:layout_below="@id/headerSection"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="25dp"
                 android:layout_marginBottom="8dp">
 
                 <TextView
@@ -110,7 +139,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="#333"
+                    android:background="@drawable/bg_search_box"
                     android:padding="8dp"
                     android:layout_marginEnd="8dp"
                     android:text="nhà giả kim"
@@ -121,7 +150,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="#333"
+                    android:background="@drawable/bg_search_box"
                     android:padding="8dp"
                     android:layout_marginEnd="8dp"
                     android:text="nhà"
@@ -132,7 +161,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="#333"
+                    android:background="@drawable/bg_search_box"
                     android:padding="8dp"
                     android:text="tôi tài giỏi bạn cũng thế"
                     android:textColor="#fff"
@@ -150,6 +179,7 @@
                 android:textSize="20sp"
                 android:textStyle="bold"
                 android:layout_below="@id/historyFindhint"
+                android:layout_marginTop="25dp"
                 android:layout_marginBottom="8dp" />
 
             <!-- Danh sách sách -->
@@ -166,8 +196,7 @@
                     android:orientation="horizontal"
                     android:padding="8dp"
                     android:layout_marginBottom="8dp"
-                    android:background="#1A1A1A"
-                    android:radius="8dp">
+                    >
 
                     <ImageView
                         android:layout_width="120dp"
@@ -204,9 +233,7 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:padding="8dp"
-                    android:layout_marginBottom="8dp"
-                    android:background="#1A1A1A"
-                    android:radius="8dp">
+                    android:layout_marginBottom="8dp">
 
                     <ImageView
                         android:layout_width="120dp"
@@ -243,9 +270,7 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:padding="8dp"
-                    android:layout_marginBottom="8dp"
-                    android:background="#1A1A1A"
-                    android:radius="8dp">
+                    android:layout_marginBottom="8dp">
 
                     <ImageView
                         android:layout_width="120dp"

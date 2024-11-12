@@ -15,7 +15,7 @@ import androidx.fragment.app.FragmentTransaction;
 import com.example.bookapp.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-public class TrangChuUser extends AppCompatActivity {
+public class TrangChuUser extends AppCompatActivity{
 
     private FrameLayout viewPager2;
     private BottomNavigationView bottomNavigationView;
@@ -62,4 +62,22 @@ public class TrangChuUser extends AppCompatActivity {
         transaction.commit();
 
     }
+
+    public void showViewBookFragment(int bookId){
+        ViewBookFragment viewBookFragment = ViewBookFragment.newInstance(bookId);
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.view_pager_trangchu, viewBookFragment)
+                .addToBackStack(null)
+                .commit();
+    }
+
+//    @Override
+//    public void onCategorySelected(String category) {
+//        // Khi một chủ đề được chọn, thay thế fragment với BookListFragment
+//        ItemBookTheoChuDeFragment ItemBookFragment = ItemBookTheoChuDeFragment.newInstance(category);
+//        getSupportFragmentManager().beginTransaction()
+//                .replace(R.id.view_pager_trangchu, ItemBookFragment)
+//                .addToBackStack(null)
+//                .commit();
+//    }
 }
