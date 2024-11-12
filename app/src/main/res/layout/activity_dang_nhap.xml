@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".userInterface.DangNhapActivity"
+    android:background="@color/black"
+    >
+    
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="300dp">
+        
+    </FrameLayout>
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <!-- Tiêu đề chào mừng -->
+        <TextView
+            android:id="@+id/welcome_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="100dp"
+            android:text="Chào mừng bạn đến với Book app"
+            android:textColor="@android:color/white"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_gravity="center"/>
+
+        <!-- Tên ứng dụng -->
+        <TextView
+            android:id="@+id/app_name_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/welcome_text"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="8dp"
+            android:text="BOOK APP"
+            android:textColor="@android:color/white"
+            android:textSize="30sp"
+            android:textStyle="italic"
+            android:fontFamily="serif"
+            android:layout_gravity="center"/>
+
+        <!-- Ô nhập tên đăng nhập -->
+        <EditText
+            android:id="@+id/username_edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/app_name_text"
+            android:layout_marginTop="40dp"
+            android:background="@drawable/rounded_edittext_background"
+            android:hint="Tên đăng nhập"
+            android:padding="12dp"
+            android:textColor="@android:color/white"
+            android:textColorHint="@android:color/darker_gray" />
+
+        <!-- Ô nhập mật khẩu -->
+        <EditText
+            android:id="@+id/password_edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/username_edit_text"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/rounded_edittext_background"
+            android:hint="Mật khẩu"
+            android:padding="12dp"
+            android:textColor="@android:color/white"
+            android:textColorHint="@android:color/darker_gray"
+            android:inputType="textPassword" />
+
+        <!-- Nút Đăng nhập -->
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/login_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/password_edit_text"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/bg_btndangnhap"
+            android:text="ĐĂNG NHẬP"
+            android:textSize="18dp"
+            android:textColor="@android:color/white"
+            android:textStyle="bold" />
+
+        <!-- Đăng ký ngay và Quên mật khẩu -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/login_button"
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal"
+            android:gravity="center_horizontal">
+
+            <TextView
+                android:id="@+id/register_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Đăng kí ngay"
+                android:textColor="@color/teal_200"
+                android:layout_marginEnd="40dp"/>
+
+            <TextView
+                android:id="@+id/forgot_password_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Quên mật khẩu?"
+                android:textColor="@color/teal_200"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+
+</RelativeLayout>

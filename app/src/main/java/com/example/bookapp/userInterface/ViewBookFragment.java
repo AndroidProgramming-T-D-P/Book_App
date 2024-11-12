@@ -1,5 +1,6 @@
 package com.example.bookapp.userInterface;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -7,6 +8,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 
@@ -74,6 +76,16 @@ public class ViewBookFragment extends Fragment {
             }
         });
 
+        //Doc sach
+        Button readbutton = view.findViewById(R.id.readButton);
+        readbutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(),ReadingBookActivity.class);
+
+                startActivity(intent);
+            }
+        });
         return view;
     }
 
