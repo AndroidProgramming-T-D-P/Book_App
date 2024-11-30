@@ -2,4 +2,8 @@
     <string name="app_name">Book app</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="tenDangNhap">Tên đăng nhập</string>
+    <string name="matKhau">Mật khẩu</string>
+    <string name="nhapLaiMatKhau">Nhập lại Mật khẩu</string>
+    <string name="email">Email</string>
 </resources>
