@@ -254,18 +254,27 @@
                     android:orientation="horizontal"
                     android:paddingVertical="4dp">
 
-                    <ImageView
-                        android:layout_width="27dp"
-                        android:layout_height="27dp"
-                        android:src="@drawable/button_background" />
-
-                    <TextView
+                    <LinearLayout
+                        android:id="@+id/Linear_logout"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:text="Đăng xuất"
-                        android:textColor="@color/white"
-                        android:textSize="25sp" />
+                        android:orientation="horizontal"
+                        android:gravity="center">
+                        <ImageView
+                            android:layout_width="27dp"
+                            android:layout_height="27dp"
+                            android:src="@drawable/button_background" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:text="Đăng xuất"
+                            android:textColor="@color/white"
+                            android:textSize="25sp" />
+
+                    </LinearLayout>
+
                 </LinearLayout>
             </LinearLayout>
 

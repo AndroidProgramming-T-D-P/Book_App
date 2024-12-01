@@ -1,5 +1,6 @@
 package com.example.bookapp.userInterface;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -19,7 +20,7 @@ import com.example.bookapp.R;
  */
 public class ProfileUserFragment extends Fragment {
 
-    private LinearLayout linearLayout;
+    private LinearLayout linearLayout, logout;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -61,6 +62,7 @@ public class ProfileUserFragment extends Fragment {
         }
     }
 
+    @SuppressLint("MissingInflatedId")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -74,6 +76,16 @@ public class ProfileUserFragment extends Fragment {
                 startActivity(intent);
             }
         });
+
+        logout = view.findViewById(R.id.Linear_logout);
+        logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), LoginActivity.class);
+                startActivity(intent);
+            }
+        });
+
         return view;
     }
 }

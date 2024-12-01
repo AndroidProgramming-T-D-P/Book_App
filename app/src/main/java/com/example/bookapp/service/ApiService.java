@@ -13,4 +13,12 @@ public interface ApiService {
         @Field("userPassWord") String passWord,
         @Field("userName") String userName // Mấy cái String trong Field là phải giống mấy cái tên trường trong database ae nghe
     );
+
+    @POST("login.php")
+    @FormUrlEncoded
+    Observable<UserModel> dangnhap(
+            @Field("email") String email,
+            @Field("userPassWord") String passWord
+            // Mấy cái String trong Field là phải giống mấy cái tên trường trong database ae nghe
+    );
 }

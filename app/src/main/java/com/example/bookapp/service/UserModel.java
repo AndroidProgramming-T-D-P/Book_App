@@ -1,10 +1,17 @@
 package com.example.bookapp.service;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.List;
 
 public class UserModel {
+    @SerializedName("success")
     boolean success;
+
+    @SerializedName("message")
     String message;
+
+    @SerializedName("result")
     List<User> result;
 
     public boolean isSuccess() {

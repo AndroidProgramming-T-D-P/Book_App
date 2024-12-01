@@ -97,6 +97,11 @@ CompositeDisposable compositeDisposable = new CompositeDisposable();
                             userModel -> {
                                 if(userModel.isSuccess()) {
                                     Toast.makeText(getApplicationContext(), userModel.getMessage(), Toast.LENGTH_SHORT).show();
+                                    Utils.user_current.setEmail(str_email);
+                                    Utils.user_current.setPassWord(str_pass);
+                                    Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                                    startActivity(intent);
+                                    finish();
                                 } else {
                                     Toast.makeText(getApplicationContext(), userModel.getMessage(), Toast.LENGTH_SHORT).show();
                                 }

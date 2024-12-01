@@ -37,12 +37,12 @@
 
         <!-- Username Input -->
         <EditText
-            android:id="@+id/username_input"
+            android:id="@+id/emailLogin_input"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:background="@drawable/edittext_background"
-            android:hint="@string/tenDangNhap"
+            android:hint="@string/email"
             android:padding="12dp"
             android:textColor="@color/white"
             android:textColorHint="@android:color/darker_gray"
