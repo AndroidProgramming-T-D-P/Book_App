@@ -20,17 +20,15 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.bookapp.R;
-import com.example.bookapp.service.ApiService;
-import com.example.bookapp.service.RetrofitClient;
+import com.example.bookapp.Service.ApiService;
+import com.example.bookapp.Service.RetrofitClient;
 import com.example.bookapp.utils.Utils;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
-import retrofit2.Retrofit;
 
 public class RegisterActivity extends AppCompatActivity {
-
     public LinearLayout login_link;
     public ImageView btn_eyes_VisibilityPassWord, btn_eyes_VisibilityConfirmPassWord;
     public EditText EditTextPassWord, EditTextConfirmPassWord, email, username;
@@ -174,4 +172,5 @@ CompositeDisposable compositeDisposable = new CompositeDisposable();
         compositeDisposable.clear();
         super.onDestroy();
     }
+
 }

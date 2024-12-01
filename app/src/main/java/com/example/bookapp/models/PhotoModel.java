@@ -1,19 +1,20 @@
-package com.example.bookapp.service;
+package com.example.bookapp.models;
 
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public class UserModel {
-    @SerializedName("success")
-    boolean success;
+public class PhotoModel {
+    @SerializedName("success") // Trạng thái trả về từ API
+    private boolean success;
 
-    @SerializedName("message")
-    String message;
+    @SerializedName("message") // Thông báo từ API
+    private String message;
 
-    @SerializedName("result")
-    List<User> result;
+    @SerializedName("result") // Danh sách sách
+    private List<Photo> result;
 
+    // Getter và Setter
     public boolean isSuccess() {
         return success;
     }
@@ -30,11 +31,11 @@ public class UserModel {
         this.message = message;
     }
 
-    public List<User> getResult() {
+    public List<Photo> getResult() {
         return result;
     }
 
-    public void setResult(List<User> result) {
+    public void setResult(List<Photo> result) {
         this.result = result;
     }
 }

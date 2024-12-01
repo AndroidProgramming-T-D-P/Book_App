@@ -1,7 +1,15 @@
 package com.example.bookapp.userInterface;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.Network;
+import android.net.NetworkInfo;
 import android.os.Bundle;
+import io.reactivex.rxjava3.disposables.CompositeDisposable;
+import io.reactivex.rxjava3.disposables.Disposable;
+import io.reactivex.rxjava3.schedulers.Schedulers;
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -14,20 +22,30 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.example.bookapp.R;
+import com.example.bookapp.Service.ApiService;
+import com.example.bookapp.Service.RetrofitClient;
+import com.example.bookapp.adapters.LoaiSachAdapter;
 import com.example.bookapp.adapters.PhotoAdapter;
 import com.example.bookapp.adapters.itemBookAdapter;
 import com.example.bookapp.models.Photo;
+import com.example.bookapp.models.PhotoModel;
+import com.example.bookapp.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.core.Scheduler;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 import me.relex.circleindicator.CircleIndicator3;
 
 /**
@@ -42,6 +60,9 @@ public class HomeUserFragment extends Fragment {
     private List<Photo> mListPhoTo;
     private RecyclerView recyclerView1, recyclerView2;
     private itemBookAdapter adapter;
+    CompositeDisposable compositeDisposable = new CompositeDisposable();
+    ApiService apiService;
+
 
     private Handler mHandler = new Handler(Looper.getMainLooper());
     private Runnable mRunnable = new Runnable() {
@@ -91,11 +112,42 @@ public class HomeUserFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        apiService = RetrofitClient.getInstance(Utils.BASE_URL).create(ApiService.class);
+        getListPhotoItem();
+        getsachmoi();
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
     }
+
+    private void getsachmoi() {
+        compositeDisposable.add(apiService.getsachmoi()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        photoModel -> { // Xử lý kết quả từ API
+                            if (photoModel.isSuccess()) { // Kiểm tra trạng thái trả về
+                                List<Photo> mListPhoto = photoModel.getResult(); // Lấy danh sách từ kết quả
+                                if (mListPhoto != null && !mListPhoto.isEmpty()) {
+                                    // Khởi tạo adapter
+                                    itemBookAdapter adapter = new itemBookAdapter(getActivity().getApplicationContext(), mListPhoto);
+                                    recyclerView1.setAdapter(adapter);
+                                } else {
+                                    Toast.makeText(getActivity(), "Danh sách sách trống", Toast.LENGTH_SHORT).show();
+                                }
+                            } else {
+                                Toast.makeText(getActivity(), photoModel.getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+                        },
+                        throwable -> {
+                            // Xử lý lỗi khi API thất bại
+                            Toast.makeText(getActivity(), "Lỗi kết nối: " + throwable.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                ));
+    }
+
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -146,13 +198,15 @@ public class HomeUserFragment extends Fragment {
 
         LinearLayoutManager linearLayoutManager2 = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
         recyclerView2.setLayoutManager(linearLayoutManager2);
+        //khoi tao list
+        mListPhoTo = new ArrayList<>();
+        getListPhotoItem();
 
-        mListPhoTo = getListPhotoItem();
-        itemBookAdapter adapter1 = new itemBookAdapter(mListPhoTo);
-        recyclerView1.setAdapter(adapter1);
+        //khoi tao adapter
+        adapter  = new itemBookAdapter(getActivity().getApplicationContext(), mListPhoTo );
         //them deer test
-        itemBookAdapter adapter2 = new itemBookAdapter(mListPhoTo);
-        recyclerView2.setAdapter(adapter2);
+        itemBookAdapter adapter2 = new itemBookAdapter(getActivity().getApplicationContext(),mListPhoTo);
+        recyclerView2.setAdapter(adapter);
 
 
         // Thê Loại sách
@@ -174,10 +228,14 @@ public class HomeUserFragment extends Fragment {
         });
 
         //Click sách
-        itemBookAdapter adapter3 = new itemBookAdapter(mListPhoTo, this::onItemClick);
-        recyclerView1.setAdapter(adapter3);
+        //itemBookAdapter adapter3 = new itemBookAdapter(getActivity().getApplicationContext(), mListPhoTo, this::onItemClick);
+        //recyclerView1.setAdapter(adapter3);
 
         return view;
+    }
+
+    private void getListPhotoItem() {
+
     }
 
     //Click sách
@@ -190,38 +248,22 @@ public class HomeUserFragment extends Fragment {
     private List<Photo> getListPhoto(){
         List<Photo> list = new ArrayList<>();
 
-        list.add(new Photo(R.drawable.img_1,""));
-        list.add(new Photo(R.drawable.img_2,""));
-        list.add(new Photo(R.drawable.img_3,""));
-        list.add(new Photo(R.drawable.img_4,""));
-        list.add(new Photo(R.drawable.img_5,""));
+        list.add(new Photo(R.drawable.img_1,"",""));
+        list.add(new Photo(R.drawable.img_2,"",""));
+        list.add(new Photo(R.drawable.img_3,"",""));
+        list.add(new Photo(R.drawable.img_4,"",""));
+        list.add(new Photo(R.drawable.img_5,"",""));
 
-        list.add(new Photo(R.drawable.img_1,""));
-        list.add(new Photo(R.drawable.img_2,""));
-        list.add(new Photo(R.drawable.img_3,""));
-        list.add(new Photo(R.drawable.img_4,""));
-        list.add(new Photo(R.drawable.img_5,""));
-
-        return list;
-    }
-
-    private List<Photo> getListPhotoItem(){
-        List<Photo> list = new ArrayList<>();
-
-        list.add(new Photo(R.drawable.img_6,"sách 1"));
-        list.add(new Photo(R.drawable.img_7,"sách 2"));
-        list.add(new Photo(R.drawable.img_8,"sách 3"));
-        list.add(new Photo(R.drawable.img_9,"sách 4"));
-        list.add(new Photo(R.drawable.img_10,"sách 5"));
-
-        list.add(new Photo(R.drawable.img_1,"sách 6"));
-        list.add(new Photo(R.drawable.img_5,"sách 7"));
-        list.add(new Photo(R.drawable.img_12,"sách 8"));
-        list.add(new Photo(R.drawable.img_4,"sách 9"));
-        list.add(new Photo(R.drawable.img_9,"sách 10"));
+        list.add(new Photo(R.drawable.img_1,"",""));
+        list.add(new Photo(R.drawable.img_2,"",""));
+        list.add(new Photo(R.drawable.img_3,"",""));
+        list.add(new Photo(R.drawable.img_4,"",""));
+        list.add(new Photo(R.drawable.img_5,"",""));
 
         return list;
     }
+
+
 
     //The loại sách
     private void showTheLoaiFragment(){
@@ -263,4 +305,6 @@ public class HomeUserFragment extends Fragment {
         super.onResume();
         mHandler.postDelayed(mRunnable, 3000);
     }
+
+
 }

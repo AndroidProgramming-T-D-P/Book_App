@@ -1,4 +1,4 @@
-package com.example.bookapp.service;
+package com.example.bookapp.Service;
 
 import java.io.Serializable;
 

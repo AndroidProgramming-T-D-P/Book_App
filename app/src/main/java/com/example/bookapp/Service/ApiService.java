@@ -1,11 +1,24 @@
-package com.example.bookapp.service;
+package com.example.bookapp.Service;
 
+import com.example.bookapp.models.LoaiSachModel;
+import com.example.bookapp.models.Photo;
+import com.example.bookapp.models.PhotoModel;
+
+import io.reactivex.disposables.Disposable;
 import io.reactivex.rxjava3.core.Observable;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.GET;
 import retrofit2.http.POST;
 
 public interface ApiService {
+    @GET("getloaisach.php")
+    Observable<LoaiSachModel> getloaisach();
+
+    @GET("getsachmoi.php")
+        Observable<PhotoModel> getsachmoi();
+
+
     @POST("signup.php")
     @FormUrlEncoded
     Observable<UserModel> dangki(
@@ -21,4 +34,5 @@ public interface ApiService {
             @Field("userPassWord") String passWord
             // Mấy cái String trong Field là phải giống mấy cái tên trường trong database ae nghe
     );
+
 }

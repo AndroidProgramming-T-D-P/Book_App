@@ -1,4 +1,4 @@
-package com.example.bookapp.service;
+package com.example.bookapp.Service;
 
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory;

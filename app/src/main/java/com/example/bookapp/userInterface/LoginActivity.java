@@ -20,8 +20,8 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.bookapp.R;
-import com.example.bookapp.service.ApiService;
-import com.example.bookapp.service.RetrofitClient;
+import com.example.bookapp.Service.ApiService;
+import com.example.bookapp.Service.RetrofitClient;
 import com.example.bookapp.utils.Utils;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;

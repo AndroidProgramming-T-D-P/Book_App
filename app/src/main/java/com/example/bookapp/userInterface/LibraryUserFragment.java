@@ -85,7 +85,7 @@ public class LibraryUserFragment extends Fragment {
 
         //Danh sach mau
         list = new ArrayList<>();
-        list.add(new Photo(R.drawable.img_1,""));
+        list.add(new Photo(R.drawable.img_1,"",""));
         loadContinueReadingBook(list);
 //        list.add(new Photo(R.drawable.img_1,""));
 //        list.add(new Photo(R.drawable.img_1,""));
@@ -126,9 +126,9 @@ public class LibraryUserFragment extends Fragment {
     private void loadContinueReadingBook(List<Photo> list){
         list.clear();
 
-        list.add(new Photo(R.drawable.img_8, "Sach 1"));
-        list.add(new Photo(R.drawable.img_7, "Sach 2"));
-        list.add(new Photo(R.drawable.img_2, "Sach 3"));
+        list.add(new Photo(R.drawable.img_8, "Sach 1",""));
+        list.add(new Photo(R.drawable.img_7, "Sach 2",""));
+        list.add(new Photo(R.drawable.img_2, "Sach 3",""));
 
 
     }
@@ -136,26 +136,26 @@ public class LibraryUserFragment extends Fragment {
     private void loadfavouriteBook(List<Photo> list){
         list.clear();
 
-        list.add(new Photo(R.drawable.img_6, "Sach 1"));
-        list.add(new Photo(R.drawable.img_2, "Sach 2"));
-        list.add(new Photo(R.drawable.img_5, "Sach 3"));
-        list.add(new Photo(R.drawable.img_1, "Sach 4"));
-        list.add(new Photo(R.drawable.img_12, "Sach 5"));
-        list.add(new Photo(R.drawable.img_4, "Sach 6"));
-        list.add(new Photo(R.drawable.img_11, "Sach 7"));
-        list.add(new Photo(R.drawable.img_9, "Sach 8"));
-        list.add(new Photo(R.drawable.img_8, "Sach 9"));
-        list.add(new Photo(R.drawable.img_7, "Sach 10"));
-        list.add(new Photo(R.drawable.img_10, "Sach 11"));
-        list.add(new Photo(R.drawable.img_3, "Sach 12"));
+        list.add(new Photo(R.drawable.img_6, "Sach 1",""));
+        list.add(new Photo(R.drawable.img_2, "Sach 2",""));
+        list.add(new Photo(R.drawable.img_5, "Sach 3",""));
+        list.add(new Photo(R.drawable.img_1, "Sach 4",""));
+        list.add(new Photo(R.drawable.img_12, "Sach 5",""));
+        list.add(new Photo(R.drawable.img_4, "Sach 6",""));
+        list.add(new Photo(R.drawable.img_11, "Sach 7",""));
+        list.add(new Photo(R.drawable.img_9, "Sach 8",""));
+        list.add(new Photo(R.drawable.img_8, "Sach 9",""));
+        list.add(new Photo(R.drawable.img_7, "Sach 10",""));
+        list.add(new Photo(R.drawable.img_10, "Sach 11",""));
+        list.add(new Photo(R.drawable.img_3, "Sach 12",""));
     }
     @SuppressLint("NotifyDataSetChanged")
     private void loadDownLoadBook(List<Photo> list){
         list.clear();
 
-        list.add(new Photo(R.drawable.img_3, "Sach 1"));
-        list.add(new Photo(R.drawable.img_4, "Sach 2"));
-        list.add(new Photo(R.drawable.img_5, "Sach 3"));
+        list.add(new Photo(R.drawable.img_3, "Sach 1",""));
+        list.add(new Photo(R.drawable.img_4, "Sach 2",""));
+        list.add(new Photo(R.drawable.img_5, "Sach 3",""));
 
     }
 }
