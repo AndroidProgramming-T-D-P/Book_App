@@ -18,6 +18,8 @@ public interface ApiService {
     @GET("getsachmoi.php")
         Observable<PhotoModel> getsachmoi();
 
+    @GET("getsachdecu.php")
+    Observable<PhotoModel> getsachdecu();
 
     @POST("signup.php")
     @FormUrlEncoded

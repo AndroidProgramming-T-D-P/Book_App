@@ -42,13 +42,12 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:background="@drawable/edittext_background"
-            android:hint="@string/tenDangNhap"
+            android:hint="Tên đăng nhập"
             android:padding="12dp"
             android:textColor="@color/white"
             android:textColorHint="@android:color/darker_gray"
             android:textSize="14dp"
-            tools:ignore="TextSizeCheck,TouchTargetSizeCheck"
-            android:singleLine="true"/>
+            tools:ignore="TextSizeCheck,TouchTargetSizeCheck" />
 
         <!-- email -->
         <EditText
@@ -57,16 +56,15 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:background="@drawable/edittext_background"
-            android:hint="@string/email"
+            android:hint="Email"
             android:padding="12dp"
             android:textColor="@color/white"
             android:textColorHint="@android:color/darker_gray"
             android:textSize="14dp"
-            tools:ignore="TextSizeCheck,TouchTargetSizeCheck"
-            android:singleLine="true"/>
+            tools:ignore="TextSizeCheck,TouchTargetSizeCheck" />
 
         <!-- Password Input -->
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
@@ -75,33 +73,32 @@
 
             <EditText
                 android:id="@+id/edit_text_password"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:hint="@string/matKhau"
+                android:hint="Mật khẩu"
                 android:inputType="textPassword"
                 android:padding="12dp"
                 android:textColor="@color/white"
                 android:textColorHint="@android:color/darker_gray"
                 android:textSize="14dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
                 tools:ignore="TextSizeCheck,TouchTargetSizeCheck" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"/>
 
             <ImageView
                 android:id="@+id/password_eye_icon"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:src="@drawable/ic_visibility"
-                android:layout_marginRight="10dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:layout_marginRight="10dp"/>
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        </LinearLayout>
 
         <!-- Password Input -->
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
@@ -110,30 +107,29 @@
 
             <EditText
                 android:id="@+id/edit_text_confirmPassword"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:hint="@string/nhapLaiMatKhau"
+                android:hint="Nhập lại mật khẩu"
                 android:inputType="textPassword"
                 android:padding="12dp"
                 android:textColor="@color/white"
                 android:textColorHint="@android:color/darker_gray"
                 android:textSize="14dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
                 tools:ignore="TextSizeCheck,TouchTargetSizeCheck" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"/>
 
             <ImageView
                 android:id="@+id/confirmPassword_eye_icon"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:src="@drawable/ic_visibility"
-                android:layout_marginRight="10dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:layout_marginRight="10dp"/>
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        </LinearLayout>
 
 
         <!-- Nút Đăng Nhập -->

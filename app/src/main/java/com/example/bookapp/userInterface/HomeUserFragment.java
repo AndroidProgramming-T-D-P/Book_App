@@ -115,6 +115,7 @@ public class HomeUserFragment extends Fragment {
         apiService = RetrofitClient.getInstance(Utils.BASE_URL).create(ApiService.class);
         getListPhotoItem();
         getsachmoi();
+        getsachdecu();
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
@@ -134,6 +135,33 @@ public class HomeUserFragment extends Fragment {
                                     // Khởi tạo adapter
                                     itemBookAdapter adapter = new itemBookAdapter(getActivity().getApplicationContext(), mListPhoto);
                                     recyclerView1.setAdapter(adapter);
+                                } else {
+                                    Toast.makeText(getActivity(), "Danh sách sách trống", Toast.LENGTH_SHORT).show();
+                                }
+                            } else {
+                                Toast.makeText(getActivity(), photoModel.getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+                        },
+                        throwable -> {
+                            // Xử lý lỗi khi API thất bại
+                            Toast.makeText(getActivity(), "Lỗi kết nối: " + throwable.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                ));
+    }
+
+
+    private void getsachdecu() {
+        compositeDisposable.add(apiService.getsachdecu()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        photoModel -> { // Xử lý kết quả từ API
+                            if (photoModel.isSuccess()) { // Kiểm tra trạng thái trả về
+                                List<Photo> mListPhoto = photoModel.getResult(); // Lấy danh sách từ kết quả
+                                if (mListPhoto != null && !mListPhoto.isEmpty()) {
+                                    // Khởi tạo adapter
+                                    itemBookAdapter adapter = new itemBookAdapter(getActivity().getApplicationContext(), mListPhoto);
+                                    recyclerView2.setAdapter(adapter);
                                 } else {
                                     Toast.makeText(getActivity(), "Danh sách sách trống", Toast.LENGTH_SHORT).show();
                                 }
