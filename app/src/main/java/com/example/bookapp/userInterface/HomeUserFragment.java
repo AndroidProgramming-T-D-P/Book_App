@@ -58,7 +58,7 @@ public class HomeUserFragment extends Fragment {
     private ViewPager2 mViewPager2;
     private CircleIndicator3 mCircleIndicator3;
     private List<Photo> mListPhoTo;
-    private RecyclerView recyclerView1, recyclerView2;
+    private RecyclerView recyclerView1, recyclerView2, recyclerView3, recyclerView4;
     private itemBookAdapter adapter;
     CompositeDisposable compositeDisposable = new CompositeDisposable();
     ApiService apiService;
@@ -116,6 +116,8 @@ public class HomeUserFragment extends Fragment {
         getListPhotoItem();
         getsachmoi();
         getsachdecu();
+        getsachtop10doanhnhan();
+        getsachsuckhoe();
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
@@ -177,6 +179,60 @@ public class HomeUserFragment extends Fragment {
     }
 
 
+    private void getsachtop10doanhnhan() {
+        compositeDisposable.add(apiService.getach1op10doanhnhan()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        photoModel -> { // Xử lý kết quả từ API
+                            if (photoModel.isSuccess()) { // Kiểm tra trạng thái trả về
+                                List<Photo> mListPhoto = photoModel.getResult(); // Lấy danh sách từ kết quả
+                                if (mListPhoto != null && !mListPhoto.isEmpty()) {
+                                    // Khởi tạo adapter
+                                    itemBookAdapter adapter = new itemBookAdapter(getActivity().getApplicationContext(), mListPhoto);
+                                    recyclerView3.setAdapter(adapter);
+                                } else {
+                                    Toast.makeText(getActivity(), "Danh sách sách trống", Toast.LENGTH_SHORT).show();
+                                }
+                            } else {
+                                Toast.makeText(getActivity(), photoModel.getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+                        },
+                        throwable -> {
+                            // Xử lý lỗi khi API thất bại
+                            Toast.makeText(getActivity(), "Lỗi kết nối: " + throwable.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                ));
+    }
+
+
+    private void getsachsuckhoe() {
+        compositeDisposable.add(apiService.getsachsuckhoe()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        photoModel -> { // Xử lý kết quả từ API
+                            if (photoModel.isSuccess()) { // Kiểm tra trạng thái trả về
+                                List<Photo> mListPhoto = photoModel.getResult(); // Lấy danh sách từ kết quả
+                                if (mListPhoto != null && !mListPhoto.isEmpty()) {
+                                    // Khởi tạo adapter
+                                    itemBookAdapter adapter = new itemBookAdapter(getActivity().getApplicationContext(), mListPhoto);
+                                    recyclerView4.setAdapter(adapter);
+                                } else {
+                                    Toast.makeText(getActivity(), "Danh sách sách trống", Toast.LENGTH_SHORT).show();
+                                }
+                            } else {
+                                Toast.makeText(getActivity(), photoModel.getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+                        },
+                        throwable -> {
+                            // Xử lý lỗi khi API thất bại
+                            Toast.makeText(getActivity(), "Lỗi kết nối: " + throwable.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                ));
+    }
+
+
     @SuppressLint("MissingInflatedId")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -220,12 +276,20 @@ public class HomeUserFragment extends Fragment {
 
         recyclerView1 = view.findViewById(R.id.recyclerViewNewBooks);
         recyclerView2 = view.findViewById(R.id.recyclerViewNewBooks2);
+        recyclerView3 = view.findViewById(R.id.recyclerViewNewBooks3);
+        recyclerView4 = view.findViewById(R.id.recyclerViewNewBooks4);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
         recyclerView1.setLayoutManager(linearLayoutManager);
 
         LinearLayoutManager linearLayoutManager2 = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
         recyclerView2.setLayoutManager(linearLayoutManager2);
+
+        LinearLayoutManager linearLayoutManager3 = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+        recyclerView3.setLayoutManager(linearLayoutManager3);
+
+        LinearLayoutManager linearLayoutManager4 = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+        recyclerView4.setLayoutManager(linearLayoutManager4);
         //khoi tao list
         mListPhoTo = new ArrayList<>();
         getListPhotoItem();
@@ -235,6 +299,12 @@ public class HomeUserFragment extends Fragment {
         //them deer test
         itemBookAdapter adapter2 = new itemBookAdapter(getActivity().getApplicationContext(),mListPhoTo);
         recyclerView2.setAdapter(adapter);
+
+        itemBookAdapter adapter3 = new itemBookAdapter(getActivity().getApplicationContext(),mListPhoTo);
+        recyclerView3.setAdapter(adapter);
+
+        itemBookAdapter adapter4 = new itemBookAdapter(getActivity().getApplicationContext(),mListPhoTo);
+        recyclerView4.setAdapter(adapter);
 
 
         // Thê Loại sách
