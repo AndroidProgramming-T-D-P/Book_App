@@ -79,7 +79,7 @@ public class HomeUserFragment extends Fragment {
     };
 
     // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
@@ -199,7 +199,7 @@ public class HomeUserFragment extends Fragment {
                             }
                         },
                         throwable -> {
-                            // Xử lý lỗi khi API thất bại
+// Xử lý lỗi khi API thất bại
                             Toast.makeText(getActivity(), "Lỗi kết nối: " + throwable.getMessage(), Toast.LENGTH_SHORT).show();
                         }
                 ));
@@ -327,7 +327,7 @@ public class HomeUserFragment extends Fragment {
 
         //Click sách
         //itemBookAdapter adapter3 = new itemBookAdapter(getActivity().getApplicationContext(), mListPhoTo, this::onItemClick);
-        //recyclerView1.setAdapter(adapter3);
+//recyclerView1.setAdapter(adapter3);
 
         return view;
     }
@@ -337,11 +337,11 @@ public class HomeUserFragment extends Fragment {
     }
 
     //Click sách
-    public void onItemClick(int bookId) {
-        if (getActivity() instanceof TrangChuUser) {
-            ((TrangChuUser) getActivity()).showViewBookFragment(bookId);
-        }
-    }
+//    public void onItemClick(int bookId) {
+//        if (getActivity() instanceof TrangChuUser) {
+//            ((TrangChuUser) getActivity()).showViewBookFragment(bookId);
+//        }
+//    }
 
     private List<Photo> getListPhoto(){
         List<Photo> list = new ArrayList<>();
@@ -382,13 +382,13 @@ public class HomeUserFragment extends Fragment {
     }
 
     //viewBook
-    private void showViewBookFragment(int bookId){
-        ViewBookFragment viewBookFragment = ViewBookFragment.newInstance(bookId);
-        requireActivity().getSupportFragmentManager().beginTransaction()
-                .replace(R.id.view_pager_trangchu, viewBookFragment)
-                .addToBackStack(null)
-                .commit();
-    }
+//    private void showViewBookFragment(int bookId){
+//        ViewBookFragment viewBookFragment = ViewBookFragment.newInstance(bookId);
+//        requireActivity().getSupportFragmentManager().beginTransaction()
+//                .replace(R.id.view_pager_trangchu, viewBookFragment)
+//                .addToBackStack(null)
+//                .commit();
+//    }
 
     //luu hanh dong truoc khi thoat
 

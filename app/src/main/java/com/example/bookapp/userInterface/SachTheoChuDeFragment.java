@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -18,6 +19,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.bookapp.Interface.ItemClickListener;
 import com.example.bookapp.R;
 import com.example.bookapp.Service.ApiService;
 import com.example.bookapp.Service.RetrofitClient;
@@ -38,7 +40,7 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
  * Use the {@link SachTheoChuDeFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class SachTheoChuDeFragment extends Fragment {
+public class SachTheoChuDeFragment extends Fragment implements ItemClickListener {
 
     TextView title_category;
     ImageView backButon;
@@ -120,7 +122,7 @@ public class SachTheoChuDeFragment extends Fragment {
                             sachTheoChuDeModel -> {
                                 if(sachTheoChuDeModel.isSuccess()){
                                     listSach = sachTheoChuDeModel.getResult();
-                                    listSachTheoChuDeAdapter = new itemBookAdapter(getActivity(),listSach);
+                                    listSachTheoChuDeAdapter = new itemBookAdapter(getActivity(),listSach,this);
                                     title_category.setText(category_name);
                                     recyclerView.setAdapter(listSachTheoChuDeAdapter);
                                 }
@@ -149,5 +151,18 @@ public class SachTheoChuDeFragment extends Fragment {
     public void onDestroy() {
         compositeDisposable.clear();
         super.onDestroy();
+    }
+
+    @Override
+    public void OnItemClick(Photo photo) {
+        ViewBookFragment viewBookFragment = ViewBookFragment.newInstance(photo);
+        FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.view_pager_trangchu, viewBookFragment);
+        transaction.commit();
+    }
+
+    @Override
+    public void onclick(View view, int pos, boolean isLongClick) {
+
     }
 }

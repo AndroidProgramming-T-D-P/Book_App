@@ -10,9 +10,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.bookapp.R;
+import com.example.bookapp.models.Photo;
+import com.example.bookapp.utils.Utils;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -20,6 +25,12 @@ import com.example.bookapp.R;
  * create an instance of this fragment.
  */
 public class ViewBookFragment extends Fragment {
+
+    private static final String ARG_SACH = "sach";
+    ImageView bookCover;
+    TextView bookTitle;
+    TextView author;
+    Button btn_docSach;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -35,10 +46,10 @@ public class ViewBookFragment extends Fragment {
     }
 
     // TODO: Rename and change types and number of parameters
-    public static ViewBookFragment newInstance(int bookId) {
+    public static ViewBookFragment newInstance(Photo photo) {
         ViewBookFragment fragment = new ViewBookFragment();
         Bundle args = new Bundle();
-        args.putInt("bookId", bookId);
+        args.putSerializable(ARG_SACH, photo);
         fragment.setArguments(args);
         return fragment;
     }
@@ -57,6 +68,19 @@ public class ViewBookFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_view_book, container, false);
+
+        //ÁNH xạ
+        bookCover = view.findViewById(R.id.bookCover);
+        bookTitle = view.findViewById(R.id.bookTitle);
+        author = view .findViewById(R.id.author);
+
+        //Lấy thông tin sách từ bundle
+        Photo sach = (Photo) getArguments().getSerializable(ARG_SACH);
+
+        Utils utils = new Utils();
+        bookTitle.setText(sach.getTitle());
+        author.setText("Tác giả: " + sach.getAuthor());
+        Glide.with(getContext()).load(utils.BASE_URL + sach.getCover_image()).into(bookCover);
 
         //Quay lại
         ImageButton backButton = view.findViewById(R.id.backButtonViewBook);
@@ -90,7 +114,7 @@ public class ViewBookFragment extends Fragment {
     }
 
     private void moveToTrangChu(){
-        HomeUserFragment homeUserFragment = new HomeUserFragment();
+        TheLoaiSachUserFragment homeUserFragment = new TheLoaiSachUserFragment();
         requireActivity().getSupportFragmentManager().beginTransaction()
                 .replace(R.id.view_pager_trangchu, homeUserFragment)
                 .addToBackStack(null)

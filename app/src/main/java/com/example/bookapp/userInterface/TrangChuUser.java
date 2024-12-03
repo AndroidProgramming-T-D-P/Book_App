@@ -63,13 +63,13 @@ public class TrangChuUser extends AppCompatActivity{
 
     }
 
-    public void showViewBookFragment(int bookId){
-        ViewBookFragment viewBookFragment = ViewBookFragment.newInstance(bookId);
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.view_pager_trangchu, viewBookFragment)
-                .addToBackStack(null)
-                .commit();
-    }
+//    public void showViewBookFragment(int bookId){
+//        ViewBookFragment viewBookFragment = ViewBookFragment.newInstance(bookId);
+//        getSupportFragmentManager().beginTransaction()
+//                .replace(R.id.view_pager_trangchu, viewBookFragment)
+//                .addToBackStack(null)
+//                .commit();
+//    }
 
 //    @Override
 //    public void onCategorySelected(String category) {
