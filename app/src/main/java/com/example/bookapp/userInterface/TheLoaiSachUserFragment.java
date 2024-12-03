@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.ListView;
 
@@ -38,6 +39,8 @@ public class TheLoaiSachUserFragment extends Fragment {
     ListView listView;
     CompositeDisposable compositeDisposable = new CompositeDisposable();
     ApiService apiService;
+    String category_name;
+            int category_id;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -93,6 +96,46 @@ public class TheLoaiSachUserFragment extends Fragment {
         //Call
         apiService = RetrofitClient.getInstance(Utils.BASE_URL).create(ApiService.class);
         getLoaiSach();
+
+        //click item
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+                // Lấy item tại vị trí position
+
+                category_name = listLoaiSach.get(position).getCategory_name().trim();
+
+                Log.d("chao cac ban", category_name);
+                compositeDisposable.add(apiService.getidsach(category_name)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(
+                                loaiSachModel -> {
+                                    if(loaiSachModel.isSuccess()){
+                                        LoaiSach loaiSach = loaiSachModel.getResult().get(0);
+                                        category_id = loaiSach.getCategory_id();
+                                        // Tạo Fragment và truyền dữ liệu qua Bundle
+                                        SachTheoChuDeFragment sachTheoChuDeFragment = new SachTheoChuDeFragment();
+                                        Bundle bundle = new Bundle();
+                                        bundle.putInt("CATEGORY_ID", category_id);
+                                        bundle.putString("CATEGORY_NAME", category_name);
+                                        // Truyền category_id vào bundle
+                                        sachTheoChuDeFragment.setArguments(bundle);
+
+                                        requireActivity().getSupportFragmentManager().beginTransaction()
+                                                .replace(R.id.view_pager_trangchu, sachTheoChuDeFragment)
+                                                .addToBackStack(null)
+                                                .commit();
+                                        Log.d("OkOK", category_id+"");
+                                    } else {
+                                        Log.d("DEBUG", "API Failed: " + loaiSachModel.getMessage());
+                                    }
+                                }, throwable -> {
+                                    Log.e("DEBUG", "Error: " + throwable.getMessage());
+                                }
+                        ));
+            }
+        });
 
         //Quay lại
         // Thê Loại sách

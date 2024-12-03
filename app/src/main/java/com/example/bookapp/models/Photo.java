@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName;
 
 public class Photo {
     @SerializedName("id") // Ánh xạ với trường "id" từ API
-    private int id;
+    private int book_id;
 
     @SerializedName("title") // Ánh xạ với trường "title" từ API
     private String title;
@@ -14,7 +14,7 @@ public class Photo {
 
     // Constructor
     public Photo(int id, String title, String cover_image) {
-        this.id = id;
+        this.book_id = id;
         this.title = title;
         this.cover_image = cover_image;
 
@@ -22,11 +22,11 @@ public class Photo {
     }
 
     public int getId() {
-        return id;
+        return book_id;
     }
 
     public void setId(int id) {
-        this.id = id;
+        this.book_id = id;
     }
 
     public String getTitle() {

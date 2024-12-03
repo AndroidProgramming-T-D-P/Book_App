@@ -15,6 +15,18 @@ public interface ApiService {
     @GET("getloaisach.php")
     Observable<LoaiSachModel> getloaisach();
 
+    @POST("getsachtheotheloai.php")
+    @FormUrlEncoded
+    Observable<PhotoModel> getlistsachtheochude(
+            @Field("category_id") int category_id
+    );
+
+    @POST("getIdSachByName.php")
+    @FormUrlEncoded
+    Observable<LoaiSachModel> getidsach(
+            @Field("category_name") String category_name
+    );
+
     @GET("getsachmoi.php")
         Observable<PhotoModel> getsachmoi();
 
