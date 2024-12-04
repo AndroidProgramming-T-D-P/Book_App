@@ -15,6 +15,9 @@ public interface ApiService {
     @GET("getloaisach.php")
     Observable<LoaiSachModel> getloaisach();
 
+    @GET("listTimKiemDefault.php")
+    Observable<PhotoModel> getsachsearch();
+
     @POST("getsachtheotheloai.php")
     @FormUrlEncoded
     Observable<PhotoModel> getlistsachtheochude(
@@ -28,7 +31,7 @@ public interface ApiService {
     );
 
     @GET("getsachmoi.php")
-        Observable<PhotoModel> getsachmoi();
+    Observable<PhotoModel> getsachmoi();
 
     @GET("getsachdecu.php")
     Observable<PhotoModel> getsachdecu();
@@ -42,9 +45,9 @@ public interface ApiService {
     @POST("signup.php")
     @FormUrlEncoded
     Observable<UserModel> dangki(
-        @Field("email") String email,
-        @Field("userPassWord") String passWord,
-        @Field("userName") String userName // Mấy cái String trong Field là phải giống mấy cái tên trường trong database ae nghe
+            @Field("email") String email,
+            @Field("userPassWord") String passWord,
+            @Field("userName") String userName // Mấy cái String trong Field là phải giống mấy cái tên trường trong database ae nghe
     );
 
     @POST("login.php")
@@ -53,6 +56,12 @@ public interface ApiService {
             @Field("email") String email,
             @Field("userPassWord") String passWord
             // Mấy cái String trong Field là phải giống mấy cái tên trường trong database ae nghe
+    );
+
+    @POST("getNoiDungSach.php")
+    @FormUrlEncoded
+    Observable<PhotoModel> getNoiDungSach(
+            @Field("book_id") int book_id
     );
 
 }

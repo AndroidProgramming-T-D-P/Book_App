@@ -13,6 +13,7 @@ import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -30,6 +31,7 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.example.bookapp.Interface.ItemClickListener;
 import com.example.bookapp.R;
 import com.example.bookapp.Service.ApiService;
 import com.example.bookapp.Service.RetrofitClient;
@@ -53,7 +55,7 @@ import me.relex.circleindicator.CircleIndicator3;
  * Use the {@link HomeUserFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class HomeUserFragment extends Fragment {
+public class HomeUserFragment extends Fragment implements ItemClickListener {
 
     private ViewPager2 mViewPager2;
     private CircleIndicator3 mCircleIndicator3;
@@ -112,12 +114,6 @@ public class HomeUserFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        apiService = RetrofitClient.getInstance(Utils.BASE_URL).create(ApiService.class);
-        getListPhotoItem();
-        getsachmoi();
-        getsachdecu();
-        getsachtop10doanhnhan();
-        getsachsuckhoe();
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
@@ -135,7 +131,7 @@ public class HomeUserFragment extends Fragment {
                                 List<Photo> mListPhoto = photoModel.getResult(); // Lấy danh sách từ kết quả
                                 if (mListPhoto != null && !mListPhoto.isEmpty()) {
                                     // Khởi tạo adapter
-                                    itemBookAdapter adapter = new itemBookAdapter(getActivity().getApplicationContext(), mListPhoto);
+                                    itemBookAdapter adapter = new itemBookAdapter(getActivity(), mListPhoto,this);
                                     recyclerView1.setAdapter(adapter);
                                 } else {
                                     Toast.makeText(getActivity(), "Danh sách sách trống", Toast.LENGTH_SHORT).show();
@@ -162,7 +158,7 @@ public class HomeUserFragment extends Fragment {
                                 List<Photo> mListPhoto = photoModel.getResult(); // Lấy danh sách từ kết quả
                                 if (mListPhoto != null && !mListPhoto.isEmpty()) {
                                     // Khởi tạo adapter
-                                    itemBookAdapter adapter = new itemBookAdapter(getActivity().getApplicationContext(), mListPhoto);
+                                    itemBookAdapter adapter = new itemBookAdapter(getActivity(), mListPhoto,this);
                                     recyclerView2.setAdapter(adapter);
                                 } else {
                                     Toast.makeText(getActivity(), "Danh sách sách trống", Toast.LENGTH_SHORT).show();
@@ -189,7 +185,7 @@ public class HomeUserFragment extends Fragment {
                                 List<Photo> mListPhoto = photoModel.getResult(); // Lấy danh sách từ kết quả
                                 if (mListPhoto != null && !mListPhoto.isEmpty()) {
                                     // Khởi tạo adapter
-                                    itemBookAdapter adapter = new itemBookAdapter(getActivity().getApplicationContext(), mListPhoto);
+                                    itemBookAdapter adapter = new itemBookAdapter(getActivity(), mListPhoto,this);
                                     recyclerView3.setAdapter(adapter);
                                 } else {
                                     Toast.makeText(getActivity(), "Danh sách sách trống", Toast.LENGTH_SHORT).show();
@@ -204,8 +200,6 @@ public class HomeUserFragment extends Fragment {
                         }
                 ));
     }
-
-
     private void getsachsuckhoe() {
         compositeDisposable.add(apiService.getsachsuckhoe()
                 .subscribeOn(Schedulers.io())
@@ -216,7 +210,7 @@ public class HomeUserFragment extends Fragment {
                                 List<Photo> mListPhoto = photoModel.getResult(); // Lấy danh sách từ kết quả
                                 if (mListPhoto != null && !mListPhoto.isEmpty()) {
                                     // Khởi tạo adapter
-                                    itemBookAdapter adapter = new itemBookAdapter(getActivity().getApplicationContext(), mListPhoto);
+                                    itemBookAdapter adapter = new itemBookAdapter(getActivity(), mListPhoto,this);
                                     recyclerView4.setAdapter(adapter);
                                 } else {
                                     Toast.makeText(getActivity(), "Danh sách sách trống", Toast.LENGTH_SHORT).show();
@@ -233,7 +227,7 @@ public class HomeUserFragment extends Fragment {
     }
 
 
-    @SuppressLint("MissingInflatedId")
+    @SuppressLint("WrongViewCast")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -279,32 +273,40 @@ public class HomeUserFragment extends Fragment {
         recyclerView3 = view.findViewById(R.id.recyclerViewNewBooks3);
         recyclerView4 = view.findViewById(R.id.recyclerViewNewBooks4);
 
+        apiService = RetrofitClient.getInstance(Utils.BASE_URL).create(ApiService.class);
+        getListPhotoItem();
+
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
         recyclerView1.setLayoutManager(linearLayoutManager);
+        getsachmoi();
 
         LinearLayoutManager linearLayoutManager2 = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
         recyclerView2.setLayoutManager(linearLayoutManager2);
+        getsachdecu();
 
         LinearLayoutManager linearLayoutManager3 = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
         recyclerView3.setLayoutManager(linearLayoutManager3);
+        getsachtop10doanhnhan();
 
         LinearLayoutManager linearLayoutManager4 = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
         recyclerView4.setLayoutManager(linearLayoutManager4);
+        getsachsuckhoe();
         //khoi tao list
-        mListPhoTo = new ArrayList<>();
-        getListPhotoItem();
 
-        //khoi tao adapter
-        adapter  = new itemBookAdapter(getActivity().getApplicationContext(), mListPhoTo );
-        //them deer test
-        itemBookAdapter adapter2 = new itemBookAdapter(getActivity().getApplicationContext(),mListPhoTo);
-        recyclerView2.setAdapter(adapter);
-
-        itemBookAdapter adapter3 = new itemBookAdapter(getActivity().getApplicationContext(),mListPhoTo);
-        recyclerView3.setAdapter(adapter);
-
-        itemBookAdapter adapter4 = new itemBookAdapter(getActivity().getApplicationContext(),mListPhoTo);
-        recyclerView4.setAdapter(adapter);
+//        mListPhoTo = new ArrayList<>();
+//        getListPhotoItem();
+//
+//        //khoi tao adapter
+//        adapter  = new itemBookAdapter(getActivity().getApplicationContext(), mListPhoTo );
+//        //them deer test
+//        itemBookAdapter adapter2 = new itemBookAdapter(getActivity().getApplicationContext(),mListPhoTo);
+//        recyclerView2.setAdapter(adapter);
+//
+//        itemBookAdapter adapter3 = new itemBookAdapter(getActivity().getApplicationContext(),mListPhoTo);
+//        recyclerView3.setAdapter(adapter);
+//
+//        itemBookAdapter adapter4 = new itemBookAdapter(getActivity().getApplicationContext(),mListPhoTo);
+//        recyclerView4.setAdapter(adapter);
 
 
         // Thê Loại sách
@@ -329,8 +331,22 @@ public class HomeUserFragment extends Fragment {
         //itemBookAdapter adapter3 = new itemBookAdapter(getActivity().getApplicationContext(), mListPhoTo, this::onItemClick);
 //recyclerView1.setAdapter(adapter3);
 
+        // Nếu đã có dữ liệu trong savedInstanceState, phục hồi vị trí cuộn
+//        if (savedInstanceState != null) {
+//            int position = savedInstanceState.getInt("scroll_position", 0);
+//            linearLayoutManager.scrollToPosition(position);
+//        }
+
         return view;
     }
+
+    // Lưu trạng thái khi Fragment 1 bị hủy (chỉ cần lưu lại vị trí cuộn của RecyclerView)
+//    @Override
+//    public void onSaveInstanceState(@NonNull Bundle outState) {
+//        super.onSaveInstanceState(outState);
+//        int position = line.findFirstVisibleItemPosition();
+//        outState.putInt("scroll_position", position);
+//    }
 
     private void getListPhotoItem() {
 
@@ -403,6 +419,23 @@ public class HomeUserFragment extends Fragment {
         super.onResume();
         mHandler.postDelayed(mRunnable, 3000);
     }
+    @Override
+    public void OnItemClick(Photo photo) {
+        ViewBookFragment viewBookFragment = ViewBookFragment.newInstance(photo);
+        FragmentTransaction transaction  = requireActivity().getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.view_pager_trangchu, viewBookFragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
+    }
 
+    @Override
+    public void onclick(View view, int pos, boolean isLongClick) {
 
+    }
+
+    @Override
+    public void onDestroy() {
+        compositeDisposable.clear();
+        super.onDestroy();
+    }
 }

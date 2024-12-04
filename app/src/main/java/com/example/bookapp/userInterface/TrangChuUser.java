@@ -1,5 +1,6 @@
 package com.example.bookapp.userInterface;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.FrameLayout;
 
@@ -52,17 +53,31 @@ public class TrangChuUser extends AppCompatActivity{
             return false;
         });
 
+//        Intent intent = getIntent();
+//        if(intent.hasExtra("book_id")){
+//            int bookId = intent.getIntExtra("book_id",-1);
+//            loadViewBook(bookId);
+//        }
+
     }
+
+//    private void loadViewBook(int bookId) {
+//        ViewBookFragment fragment = ViewBookFragment.newInstance(bookId);
+//        getSupportFragmentManager().beginTransaction()
+//                .replace(R.id.view_pager_trangchu, fragment)
+//                .addToBackStack(null)
+//                .commit();
+//    }
 
     private void loadFrament(Fragment fragment) {
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         transaction.replace(R.id.view_pager_trangchu, fragment);
+        transaction.addToBackStack(null);
         transaction.commit();
 
     }
-
 //    public void showViewBookFragment(int bookId){
 //        ViewBookFragment viewBookFragment = ViewBookFragment.newInstance(bookId);
 //        getSupportFragmentManager().beginTransaction()

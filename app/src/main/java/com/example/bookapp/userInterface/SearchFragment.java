@@ -1,23 +1,53 @@
 package com.example.bookapp.userInterface;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
+import com.example.bookapp.Interface.ItemClickListener;
 import com.example.bookapp.R;
+import com.example.bookapp.Service.ApiService;
+import com.example.bookapp.Service.RetrofitClient;
+import com.example.bookapp.adapters.SearchBookAdapter;
+import com.example.bookapp.models.Photo;
+import com.example.bookapp.utils.Utils;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.disposables.CompositeDisposable;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link SearchFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class SearchFragment extends Fragment {
+public class SearchFragment extends Fragment implements ItemClickListener {
+
+    RecyclerView recyclerView;
+    ApiService apiService;
+    CompositeDisposable compositeDisposable = new CompositeDisposable();
+    List<Photo> listSach;
+    SearchBookAdapter searchBookAdapter;
+    EditText txt_search;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -59,6 +89,7 @@ public class SearchFragment extends Fragment {
         }
     }
 
+    @SuppressLint("MissingInflatedId")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -66,23 +97,72 @@ public class SearchFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_search, container, false);
 
+        recyclerView = view.findViewById(R.id.recyvlerViewSearch);
+        GridLayoutManager layoutManager = new GridLayoutManager(getContext(), 1);
+        recyclerView.setLayoutManager(layoutManager);
+
+        apiService = RetrofitClient.getInstance(Utils.BASE_URL).create(ApiService.class);
+
+        compositeDisposable.add(apiService.getsachsearch()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        photoModel -> {
+                            if(photoModel.isSuccess()) {
+                                listSach = photoModel.getResult();
+                                searchBookAdapter = new SearchBookAdapter(getActivity(),listSach,this);
+                                recyclerView.setAdapter(searchBookAdapter);
+                            }
+                        }
+                ));
+
+        //Search
+        txt_search = view.findViewById(R.id.txtsearch);
+        txt_search.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                searchBookAdapter.LocSach(charSequence.toString());
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
         //Quay lại
-        // Search sách
         ImageButton backButton = view.findViewById(R.id.backSearch);
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                moveToTrangChu();
+                getActivity().getSupportFragmentManager().popBackStack();
             }
         });
         return view;
     }
 
-    private void moveToTrangChu(){
-        HomeUserFragment homeUserFragment = new HomeUserFragment();
-        requireActivity().getSupportFragmentManager().beginTransaction()
-                .replace(R.id.view_pager_trangchu, homeUserFragment)
-                .addToBackStack(null)
-                .commit();
+    @Override
+    public void onDestroy() {
+        compositeDisposable.clear();
+        super.onDestroy();
+    }
+
+    @Override
+    public void OnItemClick(Photo photo) {
+        ViewBookFragment viewBookFragment = ViewBookFragment.newInstance(photo);
+        FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.view_pager_trangchu, viewBookFragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
+    }
+
+    @Override
+    public void onclick(View view, int pos, boolean isLongClick) {
+
     }
 }

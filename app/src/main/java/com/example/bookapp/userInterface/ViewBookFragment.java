@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,6 +31,7 @@ public class ViewBookFragment extends Fragment {
     ImageView bookCover;
     TextView bookTitle;
     TextView author;
+    int bookId = 0;
     Button btn_docSach;
 
     // TODO: Rename parameter arguments, choose names that match
@@ -53,6 +55,14 @@ public class ViewBookFragment extends Fragment {
         fragment.setArguments(args);
         return fragment;
     }
+
+//    public static ViewBookFragment newInstance(int idbook) {
+//        ViewBookFragment fragment = new ViewBookFragment();
+//        Bundle args = new Bundle();
+//        args.putSerializable(ARG_SACH, idbook);
+//        fragment.setArguments(args);
+//        return fragment;
+//    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -80,6 +90,7 @@ public class ViewBookFragment extends Fragment {
         Utils utils = new Utils();
         bookTitle.setText(sach.getTitle());
         author.setText("Tác giả: " + sach.getAuthor());
+        bookId = sach.getBook_id();
         Glide.with(getContext()).load(utils.BASE_URL + sach.getCover_image()).into(bookCover);
 
         //Quay lại
@@ -106,7 +117,7 @@ public class ViewBookFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(),ReadingBookActivity.class);
-
+                intent.putExtra("book_id", bookId);
                 startActivity(intent);
             }
         });
@@ -114,11 +125,7 @@ public class ViewBookFragment extends Fragment {
     }
 
     private void moveToTrangChu(){
-        TheLoaiSachUserFragment homeUserFragment = new TheLoaiSachUserFragment();
-        requireActivity().getSupportFragmentManager().beginTransaction()
-                .replace(R.id.view_pager_trangchu, homeUserFragment)
-                .addToBackStack(null)
-                .commit();
+        getActivity().getSupportFragmentManager().popBackStack();
     }
 
     private void moveToTrangDanhGia() {

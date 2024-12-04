@@ -57,31 +57,42 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <ImageView
-                android:id="@+id/bookCover"
-                android:layout_width="200dp"
-                android:layout_height="280dp"
-                android:layout_centerHorizontal="true"
-                android:src="@drawable/book_review"
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="10dp"
+                app:cardElevation="0dp"
                 android:layout_marginTop="10dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:id="@+id/bookCover"
+                    android:layout_width="250dp"
+                    android:layout_height="330dp"
+                    android:layout_centerHorizontal="true"
+                    android:src="@drawable/book_review"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.cardview.widget.CardView>
+
 
             <TextView
                 android:id="@+id/bookTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/bookCover"
+                android:layout_below="@id/cardView"
                 android:layout_centerHorizontal="true"
                 android:text="Thực vật và nấm"
                 android:textColor="#FFFFFF"
                 android:textSize="24sp"
                 android:textStyle="bold"
-                android:layout_marginTop="5dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/bookCover" />
+                app:layout_constraintTop_toBottomOf="@+id/cardView" />
 
             <!-- Tác giả -->
             <TextView
@@ -399,7 +410,6 @@
                             android:layout_height="wrap_content"
                             android:layout_toEndOf="@id/star1"
                             android:src="@drawable/ic_star_filled" />
-
                         <ImageView
                             android:id="@+id/star03"
                             android:layout_width="wrap_content"

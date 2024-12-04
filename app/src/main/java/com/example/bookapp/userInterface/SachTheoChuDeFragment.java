@@ -158,6 +158,7 @@ public class SachTheoChuDeFragment extends Fragment implements ItemClickListener
         ViewBookFragment viewBookFragment = ViewBookFragment.newInstance(photo);
         FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.view_pager_trangchu, viewBookFragment);
+        transaction.addToBackStack(null);
         transaction.commit();
     }
 
