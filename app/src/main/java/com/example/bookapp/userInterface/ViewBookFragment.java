@@ -7,10 +7,13 @@ import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.icu.text.LocaleDisplayNames;
 import android.os.Bundle;
 
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -24,9 +27,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.bookapp.Interface.ItemClickListener;
 import com.example.bookapp.R;
 import com.example.bookapp.Service.ApiService;
 import com.example.bookapp.Service.RetrofitClient;
+import com.example.bookapp.adapters.DanhGiaAdapter;
+import com.example.bookapp.models.DanhGia;
 import com.example.bookapp.models.Photo;
 import com.example.bookapp.utils.Utils;
 
@@ -42,7 +48,7 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
  * Use the {@link ViewBookFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ViewBookFragment extends Fragment {
+public class ViewBookFragment extends Fragment implements ItemClickListener {
 
     private static final String ARG_SACH = "sach";
     ImageView bookCover;
@@ -52,7 +58,9 @@ public class ViewBookFragment extends Fragment {
     int bookId = 0;
     Button btn_docSach;
     public ApiService apiService;
-    List<Photo> array = new ArrayList<>();
+    List<DanhGia> array;
+    DanhGiaAdapter listDanhGia;
+    RecyclerView recyclerViewDanhGia;
     CompositeDisposable compositeDisposable = new CompositeDisposable();
 
 
@@ -110,6 +118,7 @@ public class ViewBookFragment extends Fragment {
         bookCover = view.findViewById(R.id.bookCover);
         bookTitle = view.findViewById(R.id.bookTitle);
         author = view .findViewById(R.id.author);
+        recyclerViewDanhGia = view.findViewById(R.id.recyclerDanhGia);
 
         //Lấy thông tin sách từ bundle
         Photo sach = (Photo) getArguments().getSerializable(ARG_SACH);
@@ -160,6 +169,21 @@ public class ViewBookFragment extends Fragment {
                         photoModel -> {
                             if(photoModel.isSuccess()){
                                 viewer.setText(photoModel.getResult().get(0).getView()+"");
+                            }
+                        }
+                ));
+
+        compositeDisposable.add(apiService.getDanhGia(bookId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        danhGiaModel -> {
+                            Log.d("ThongThongBaoBao",danhGiaModel.toString());
+                            if(danhGiaModel.isSuccess()) {
+                                array = danhGiaModel.getResult();
+                                listDanhGia = new DanhGiaAdapter(getActivity(),array);
+                                recyclerViewDanhGia.setAdapter(listDanhGia);
+                                recyclerViewDanhGia.setLayoutManager(new LinearLayoutManager(getContext()));
                             }
                         }
                 ));
@@ -223,7 +247,7 @@ public class ViewBookFragment extends Fragment {
                                 ));
                     }
                 } else {
-                    Log.d("Thoong baooo", "Drawable is null");
+                    Log.d("Thong báo", "Drawable is null");
                 }
             }
         });
@@ -234,7 +258,16 @@ public class ViewBookFragment extends Fragment {
         DanhGiaButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                moveToTrangDanhGia();
+                //moveToTrangDanhGia();
+                ReviewBookFragment reviewBookFragment = new ReviewBookFragment();
+                Bundle bundle = new Bundle();
+                bundle.putInt("BOOK_ID", sach.getBook_id());
+                // Truyền category_id vào bundle
+                reviewBookFragment.setArguments(bundle);
+                requireActivity().getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.view_pager_trangchu, reviewBookFragment)
+                        .addToBackStack(null)
+                        .commit();
             }
         });
 
@@ -267,11 +300,32 @@ public class ViewBookFragment extends Fragment {
         getActivity().getSupportFragmentManager().popBackStack();
     }
 
-    private void moveToTrangDanhGia() {
-        ReviewBookFragment reviewBookFragment = new ReviewBookFragment();
-        requireActivity().getSupportFragmentManager().beginTransaction()
-                .replace(R.id.view_pager_trangchu, reviewBookFragment)
-                .addToBackStack(null)
-                .commit();
+//    private void moveToTrangDanhGia() {
+//        SachTheoChuDeFragment sachTheoChuDeFragment = new SachTheoChuDeFragment();
+//        Bundle bundle = new Bundle();
+//        bundle.putInt("CATEGORY_ID", category_id);
+//        // Truyền category_id vào bundle
+//        sachTheoChuDeFragment.setArguments(bundle);
+//        ReviewBookFragment reviewBookFragment = new ReviewBookFragment();
+//        requireActivity().getSupportFragmentManager().beginTransaction()
+//                .replace(R.id.view_pager_trangchu, reviewBookFragment)
+//                .addToBackStack(null)
+//                .commit();
+//    }
+
+    @Override
+    public void onDestroy() {
+        compositeDisposable.clear();
+        super.onDestroy();
+    }
+
+    @Override
+    public void OnItemClick(Photo photo) {
+        //
+    }
+
+    @Override
+    public void onclick(View view, int pos, boolean isLongClick) {
+
     }
 }

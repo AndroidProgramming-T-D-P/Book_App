@@ -117,6 +117,7 @@ public class LoginActivity extends AppCompatActivity {
                             .subscribe(
                                userModel -> {
                                     if(userModel.isSuccess()){
+                                        Toast.makeText(LoginActivity.this, userModel.getMessage(), Toast.LENGTH_SHORT).show();
                                         Utils.user_current = userModel.getResult().get(0);
                                         SharedPreferences preferences = getSharedPreferences("UserPreferences", Context.MODE_PRIVATE);
                                         SharedPreferences.Editor editor = preferences.edit();
@@ -124,6 +125,8 @@ public class LoginActivity extends AppCompatActivity {
                                         editor.apply();
                                         Intent intent = new Intent(getApplicationContext(), TrangChuUser.class);
                                         startActivity(intent);
+                                    } else {
+                                        Toast.makeText(LoginActivity.this, userModel.getMessage(), Toast.LENGTH_SHORT).show();
                                     }
                                }, throwable -> {
                                         Toast.makeText(getApplicationContext(), throwable.getMessage(), Toast.LENGTH_SHORT).show();

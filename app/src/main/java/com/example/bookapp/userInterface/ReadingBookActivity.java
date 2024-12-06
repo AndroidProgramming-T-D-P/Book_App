@@ -78,7 +78,7 @@ public class ReadingBookActivity extends AppCompatActivity {
         //headerToolbar.setVisibility(View.GONE);
 
         id_book = getIntent().getIntExtra("book_id", -1);
-        Toast.makeText(this, id_book+"", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, id_book+"", Toast.LENGTH_SHORT).show();
 
         apiService = RetrofitClient.getInstance(Utils.BASE_URL).create(ApiService.class);
 

@@ -1,5 +1,6 @@
 package com.example.bookapp.Service;
 
+import com.example.bookapp.models.DanhGiaModel;
 import com.example.bookapp.models.LoaiSachModel;
 import com.example.bookapp.models.Photo;
 import com.example.bookapp.models.PhotoModel;
@@ -105,7 +106,20 @@ public interface ApiService {
             @Field("book_id") int book_id
     );
 
+    @POST("getDanhGia.php")
+    @FormUrlEncoded
+    Observable<DanhGiaModel> getDanhGia(
+            @Field("book_id") int book_id
+    );
 
+    @POST("InsertDanhGia.php")
+    @FormUrlEncoded
+    Observable<DanhGiaModel> ThemDanhGia(
+            @Field("book_id") int book_id,
+            @Field("user_id") int user_id,
+            @Field("rating") int rating,
+            @Field("mota") String mota
+    );
 
 
 }

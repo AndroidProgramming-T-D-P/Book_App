@@ -1,17 +1,33 @@
 package com.example.bookapp.userInterface;
 
+import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
+import androidx.appcompat.widget.AppCompatButton;
 import androidx.fragment.app.Fragment;
 
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.bookapp.R;
+import com.example.bookapp.Service.ApiService;
+import com.example.bookapp.Service.RetrofitClient;
+import com.example.bookapp.utils.Utils;
+
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.disposables.CompositeDisposable;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -19,6 +35,14 @@ import com.example.bookapp.R;
  * create an instance of this fragment.
  */
 public class ReviewBookFragment extends Fragment {
+
+    ApiService apiService;
+    CompositeDisposable compositeDisposable = new CompositeDisposable();
+    ImageView imageView;
+    TextView title, author;
+    AppCompatButton btnDanhGia;
+    private int dem = 0;
+    EditText comment;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -60,11 +84,41 @@ public class ReviewBookFragment extends Fragment {
         }
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_review_book, container, false);
+
+        SharedPreferences preferences = requireActivity().getSharedPreferences("UserPreferences", Context.MODE_PRIVATE);
+        int user_id = preferences.getInt("user_id", -1);
+
+        imageView = view.findViewById(R.id.ivBookCover);
+        title = view.findViewById(R.id.tvBookName);
+        author = view.findViewById(R.id.tvAuthor);
+        btnDanhGia = view.findViewById(R.id.btnSubmit);
+        comment = view.findViewById(R.id.etComment);
+
+        apiService = RetrofitClient.getInstance(Utils.BASE_URL).create(ApiService.class);
+        Bundle args = getArguments();
+        int  book_id = args.getInt("BOOK_ID");
+        if(args != null){
+            compositeDisposable.add(apiService.getSachById(book_id)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(
+                            photoModel -> {
+                                if(photoModel.isSuccess()) {
+                                    title.setText(photoModel.getResult().get(0).getTitle());
+                                    author.setText("Tác giả: "+photoModel.getResult().get(0).getAuthor());
+                                    Glide.with(getContext()).load(Utils.BASE_URL + photoModel.getResult().get(0).getCover_image()).into(imageView);
+                                }
+                            }
+                    ));
+        }
+
+
 
         ImageButton exit = view.findViewById(R.id.logoutDanhGiaBtn);
         exit.setOnClickListener(new View.OnClickListener() {
@@ -86,18 +140,44 @@ public class ReviewBookFragment extends Fragment {
         // Thêm sự kiện click cho từng ngôi sao
         for (int i = 0; i < stars.length; i++) {
             final int rating = i + 1;
-            stars[i].setOnClickListener(v -> setRating(rating,stars));
+            stars[i].setOnClickListener(v -> {
+                setRating(rating,stars);
+                dem = rating;
+            });
         }
+
+        btnDanhGia.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String cmt = comment.getText().toString().trim();
+                if(TextUtils.isEmpty(cmt)){
+                    Toast.makeText(getContext(), "Bạn chưa nhập bình luận", Toast.LENGTH_SHORT).show();
+                } else {
+                    compositeDisposable.add(apiService.ThemDanhGia(book_id, user_id, dem, comment.getText().toString().trim())
+                            .subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(
+                                    danhGiaModel -> {
+                                        if(danhGiaModel.isSuccess()){
+                                            Toast.makeText(getContext(), danhGiaModel.getMessage(), Toast.LENGTH_SHORT).show();
+                                        }
+                                        else {
+                                            Toast.makeText(getContext(), danhGiaModel.getMessage(), Toast.LENGTH_SHORT).show();
+                                        }
+                                    }, throwable -> {
+                                        //Toast.makeText(getContext(), throwable.getMessage(), Toast.LENGTH_SHORT).show();
+                                    }
+                            ));
+                }
+            }
+        });
+
 
         return view;
     }
 
     private void moveToViewBook(){
-        ViewBookFragment viewBookFragment = new ViewBookFragment();
-        requireActivity().getSupportFragmentManager().beginTransaction()
-                .replace(R.id.view_pager_trangchu, viewBookFragment)
-                .addToBackStack(null)
-                .commit();
+        getActivity().getSupportFragmentManager().popBackStack();
     }
 
     //Trạng thái của các ngôi sao
