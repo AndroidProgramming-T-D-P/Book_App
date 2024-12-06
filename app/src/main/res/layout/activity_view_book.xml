@@ -168,7 +168,7 @@
                         android:layout_width="24dp"
                         android:layout_height="24dp"
                         android:layout_marginStart="16dp"
-                        android:src="@drawable/ic_heart" />
+                        android:src="@drawable/ic_heart_empty" />
 
                     <!-- Icon tải xuống -->
                     <ImageView

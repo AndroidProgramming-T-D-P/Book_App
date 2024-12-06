@@ -61,7 +61,7 @@
         </androidx.appcompat.widget.Toolbar>
     </com.google.android.material.appbar.AppBarLayout>
 
-    <!-- Nội dung cuốn sách -->
+    <!-- Nội dung cuốn sách
     <androidx.core.widget.NestedScrollView
         android:id="@+id/content_readBook"
         android:layout_width="match_parent"
@@ -70,16 +70,26 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:background="#f5f5dc">
 
             <TextView
-                android:layout_marginTop="100dp"
+                android:id="@+id/title_book"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Nội dung sách ở đây"
-                android:textAlignment="center"/>
-        </LinearLayout>
-    </androidx.core.widget.NestedScrollView>
+                android:text="Tên cuốn sách"
+                android:textSize="20dp"
+                android:textColor="@color/black"
+                android:textAlignment="center" />  -->
+
+            <com.github.barteksc.pdfviewer.PDFView
+                android:id="@+id/pdfView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#cccccc"/>
+
+       <!-- </LinearLayout>
+   </androidx.core.widget.NestedScrollView>  -->
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

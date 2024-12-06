@@ -74,4 +74,8 @@ dependencies {
 
     implementation ("com.github.bumptech.glide:glide:4.15.1")
 
+    implementation ("com.github.mhiew:android-pdf-viewer:3.2.0-beta.3")
+
+    implementation ("com.squareup.okhttp3:okhttp:4.9.0")
+
 }

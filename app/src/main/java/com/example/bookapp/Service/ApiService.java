@@ -3,6 +3,7 @@ package com.example.bookapp.Service;
 import com.example.bookapp.models.LoaiSachModel;
 import com.example.bookapp.models.Photo;
 import com.example.bookapp.models.PhotoModel;
+import com.example.bookapp.models.SachYeuThichModel;
 
 import io.reactivex.disposables.Disposable;
 import io.reactivex.rxjava3.core.Observable;
@@ -10,6 +11,7 @@ import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 
 public interface ApiService {
     @GET("getloaisach.php")
@@ -63,5 +65,47 @@ public interface ApiService {
     Observable<PhotoModel> getNoiDungSach(
             @Field("book_id") int book_id
     );
+
+    @POST("CheckSachYeuThich.php")
+    @FormUrlEncoded
+    Observable<SachYeuThichModel> checkSachYeuThich(
+            @Field("book_id") int book_id,
+            @Field("user_id") int user_id
+    );
+
+    @POST("ThemSachVaoMucYeuThich.php")
+    @FormUrlEncoded
+    Observable<SachYeuThichModel> ThemSachVaoMucYeuThich(
+            @Field("book_id") int book_id,
+            @Field("user_id") int user_id
+    );
+
+    @POST("XoaSachKhoiMucYeuThich.php")
+    @FormUrlEncoded
+    Observable<SachYeuThichModel> XoaSachKhoiMucMucYeuThich(
+            @Field("book_id") int book_id,
+            @Field("user_id") int user_id
+    );
+
+    @POST("getSachYeuThichTheoIdUser.php")
+    @FormUrlEncoded
+    Observable<PhotoModel> getSachYeuThich(
+            @Field("user_id") int user_id
+    );
+
+    @POST("getSachById.php")
+    @FormUrlEncoded
+    Observable<PhotoModel> getSachById(
+            @Field("book_id") int book_id
+    );
+
+    @POST("upDateViewer.php")
+    @FormUrlEncoded
+    Observable<PhotoModel> updateViewer(
+            @Field("book_id") int book_id
+    );
+
+
+
 
 }

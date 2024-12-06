@@ -1,11 +1,16 @@
 package com.example.bookapp.userInterface;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
@@ -21,18 +26,26 @@ import com.example.bookapp.Service.ApiService;
 import com.example.bookapp.Service.RetrofitClient;
 import com.example.bookapp.models.Photo;
 import com.example.bookapp.utils.Utils;
+import com.github.barteksc.pdfviewer.PDFView;
+//import com.joanzapata.pdfview.PDFView;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 public class ReadingBookActivity extends AppCompatActivity {
 
     private Toolbar headerToolbar;
     private boolean isHeaderVisible = false;
-    private NestedScrollView scrollView;
+    //private NestedScrollView scrollView;
+    //private LinearLayout content;
     private GestureDetector gestureDetector;
     private ImageButton backBtn;
     int id_book = 0;
@@ -40,7 +53,11 @@ public class ReadingBookActivity extends AppCompatActivity {
     ApiService apiService;
     CompositeDisposable compositeDisposable = new CompositeDisposable();
     List<Photo> listSach;
+    //PDFView pdfView;
 
+    PDFView pdfView;
+
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,10 +70,15 @@ public class ReadingBookActivity extends AppCompatActivity {
         });
 
         headerToolbar = findViewById(R.id.header_ReadBook);
-        scrollView = findViewById(R.id.content_readBook);
+        //scrollView = findViewById(R.id.content_readBook);
+        //content = findViewById(R.id.content_readBook);
         backBtn = findViewById(R.id.btn_back_readBook);
+        pdfView = findViewById(R.id.pdfView);
+
+        //headerToolbar.setVisibility(View.GONE);
 
         id_book = getIntent().getIntExtra("book_id", -1);
+        Toast.makeText(this, id_book+"", Toast.LENGTH_SHORT).show();
 
         apiService = RetrofitClient.getInstance(Utils.BASE_URL).create(ApiService.class);
 
@@ -67,7 +89,8 @@ public class ReadingBookActivity extends AppCompatActivity {
                         photoModel -> {
                             if(photoModel.isSuccess()){
                                 listSach = photoModel.getResult();
-                                file_pdf = listSach.get(0).getFile_path();
+                                file_pdf = Utils.BASE_URL + listSach.get(0).getFile_path();
+                                Log.d("Thông báo", file_pdf+"");
                                 ShowNoiDung(file_pdf);
                             }
                         }
@@ -80,7 +103,10 @@ public class ReadingBookActivity extends AppCompatActivity {
                 return true;
             }
         });
-        scrollView.setOnTouchListener((v, event) -> gestureDetector.onTouchEvent(event));
+        //scrollView.setOnTouchListener((v, event) -> gestureDetector.onTouchEvent(event));
+        findViewById(R.id.main).setOnTouchListener((v, event) -> gestureDetector.onTouchEvent(event));
+        //pdfView.setOnTouchListener((v, event) -> gestureDetector.onTouchEvent(event));
+
 
         //Thoat
         backBtn.setOnClickListener(new View.OnClickListener() {
@@ -96,7 +122,41 @@ public class ReadingBookActivity extends AppCompatActivity {
 
     }
 
-    private void ShowNoiDung(String filePdf) {
+    private void ShowNoiDung(final String filePdf) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try{
+                    OkHttpClient client = new OkHttpClient();
+                    Request request = new Request.Builder().url(filePdf).build();
+                    Response response = client.newCall(request).execute();
+
+                    if (!response.isSuccessful()) {
+                        // Nếu không thành công, hiển thị thông báo lỗi
+                        runOnUiThread(() -> Toast.makeText(ReadingBookActivity.this, "Không thể tải sách. Vui lòng thử lại.", Toast.LENGTH_SHORT).show());
+                        return;
+                    }
+
+                    InputStream inputStream = response.body().byteStream();
+
+                    //hiển thị pdf
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            pdfView.fromStream(inputStream)
+                                    .enableSwipe(true)
+                                    .swipeHorizontal(false)
+                                    .enableDoubletap(true)
+                                    .load();
+                        }
+                    });
+                } catch (IOException e) {
+                    // Xử lý khi xảy ra lỗi trong quá trình tải file
+                    runOnUiThread(() -> Toast.makeText(ReadingBookActivity.this, "Lỗi khi tải sách.", Toast.LENGTH_SHORT).show());
+                    Log.e("Error", "Lỗi tải file PDF: ", e);
+                }
+            }
+        }).start();
     }
 
     private void visibleHeader() {

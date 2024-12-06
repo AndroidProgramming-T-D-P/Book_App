@@ -141,13 +141,15 @@
                 <!-- Icon sao -->
                 <ImageView
                     android:layout_width="16dp"
-                    android:layout_height="16dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
                     android:src="@drawable/ic_star_filled" />
 
                 <!-- Đánh giá sao -->
                 <TextView
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
                     android:layout_marginStart="4dp"
                     android:text="5.0/5"
                     android:textColor="#FFFFFF"
@@ -155,18 +157,21 @@
 
                 <!-- Lượt xem -->
                 <TextView
+                    android:id="@+id/viewer"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_marginStart="16dp"
                     android:text="2,400"
+                    android:gravity="center"
                     android:textColor="#FFFFFF"
                     android:textSize="14sp" />
 
                 <!-- Icon mắt -->
                 <ImageView
                     android:layout_width="16dp"
-                    android:layout_height="16dp"
+                    android:layout_height="match_parent"
                     android:layout_marginStart="4dp"
+                    android:layout_gravity="center_vertical"
                     android:src="@drawable/ic_eye" />
 
                 <View
@@ -180,10 +185,11 @@
                     android:paddingStart="125dp">
                     <!-- Icon trái tim -->
                     <ImageView
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
+                        android:id="@+id/icon_heart"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
-                        android:src="@drawable/ic_heart" />
+                        android:src="@drawable/ic_heart_empty"/>
 
                     <!-- Icon tải xuống -->
                     <ImageView

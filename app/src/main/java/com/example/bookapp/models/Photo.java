@@ -13,6 +13,15 @@ public class Photo implements Serializable {
     Date published_date;
     String cover_image;
     String file_path;
+    int view;
+
+    public int getView() {
+        return view;
+    }
+
+    public void setView(int view) {
+        this.view = view;
+    }
 
     // Constructor
     public Photo(int id, String title, String cover_image) {

@@ -391,7 +391,7 @@ public class HomeUserFragment extends Fragment implements ItemClickListener {
     //Search Sách
     private void showSearchFragment(){
         SearchFragment searchFragment = new SearchFragment();
-        requireActivity().getSupportFragmentManager().beginTransaction()
+    requireActivity().getSupportFragmentManager().beginTransaction()
                 .replace(R.id.view_pager_trangchu, searchFragment)
                 .addToBackStack(null)
                 .commit();

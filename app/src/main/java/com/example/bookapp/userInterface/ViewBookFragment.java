@@ -1,8 +1,15 @@
 package com.example.bookapp.userInterface;
 
+import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import android.util.Log;
@@ -14,11 +21,21 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.bookapp.R;
+import com.example.bookapp.Service.ApiService;
+import com.example.bookapp.Service.RetrofitClient;
 import com.example.bookapp.models.Photo;
 import com.example.bookapp.utils.Utils;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.disposables.CompositeDisposable;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -31,8 +48,13 @@ public class ViewBookFragment extends Fragment {
     ImageView bookCover;
     TextView bookTitle;
     TextView author;
+    TextView viewer;
     int bookId = 0;
     Button btn_docSach;
+    public ApiService apiService;
+    List<Photo> array = new ArrayList<>();
+    CompositeDisposable compositeDisposable = new CompositeDisposable();
+
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -73,11 +95,16 @@ public class ViewBookFragment extends Fragment {
         }
     }
 
+    @SuppressLint({"MissingInflatedId", "SetTextI18n"})
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_view_book, container, false);
+
+        //Lấy id người dùng theo phiên đăng nhập
+        SharedPreferences preferences = requireActivity().getSharedPreferences("UserPreferences", Context.MODE_PRIVATE);
+        int user_id = preferences.getInt("user_id", -1);
 
         //ÁNH xạ
         bookCover = view.findViewById(R.id.bookCover);
@@ -93,6 +120,50 @@ public class ViewBookFragment extends Fragment {
         bookId = sach.getBook_id();
         Glide.with(getContext()).load(utils.BASE_URL + sach.getCover_image()).into(bookCover);
 
+        //Yeeu thichs
+        ImageView btn_heart = view.findViewById(R.id.icon_heart);
+        btn_heart.setImageResource(R.drawable.ic_heart_empty);
+
+        Drawable emptyHeart = ContextCompat.getDrawable(getContext(), R.drawable.ic_heart_empty);
+        Drawable filledHeart = ContextCompat.getDrawable(getContext(), R.drawable.ic_heart_selected);
+
+        apiService = RetrofitClient.getInstance(Utils.BASE_URL).create(ApiService.class);
+        compositeDisposable.add(apiService.checkSachYeuThich(sach.getBook_id(), user_id)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        sachYeuThichModel -> {
+
+                            Log.d("API Response", "Response: " + sachYeuThichModel.toString());
+
+                            if(sachYeuThichModel.isSuccess()){
+                                if(sachYeuThichModel.isResult()){
+                                    btn_heart.setImageDrawable(filledHeart);
+                                } else {
+                                    btn_heart.setImageDrawable(emptyHeart);
+                                }
+                            } else {
+                                Toast.makeText(getContext(), "Không thể xác định trạng thái yêu thích", Toast.LENGTH_SHORT).show();
+                            }
+                        }, throwable -> {
+                            Log.e("API", "Lỗi gọi API: " + throwable.getMessage());
+                            Toast.makeText(getContext(), "Có lỗi xảy ra, vui lòng thử lại!", Toast.LENGTH_SHORT).show();
+                        }
+                ));
+
+        //Lượt xem
+        viewer = view.findViewById(R.id.viewer);
+        compositeDisposable.add(apiService.getSachById(bookId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        photoModel -> {
+                            if(photoModel.isSuccess()){
+                                viewer.setText(photoModel.getResult().get(0).getView()+"");
+                            }
+                        }
+                ));
+
         //Quay lại
         ImageButton backButton = view.findViewById(R.id.backButtonViewBook);
         backButton.setOnClickListener(new View.OnClickListener() {
@@ -101,6 +172,62 @@ public class ViewBookFragment extends Fragment {
                 moveToTrangChu();
             }
         });
+
+
+
+
+        btn_heart.setImageDrawable(emptyHeart);
+        btn_heart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Lấy drawable hiện tại của ImageView
+                Drawable currentDrawable = btn_heart.getDrawable();
+                if (currentDrawable != null) {
+                    // Kiểm tra nếu drawable hiện tại là trái tim rỗng
+                    if (currentDrawable.getConstantState().equals(emptyHeart.getConstantState())) {
+                        btn_heart.setImageDrawable(filledHeart);
+                        apiService = RetrofitClient.getInstance(Utils.BASE_URL).create(ApiService.class);
+                        compositeDisposable.add(apiService.ThemSachVaoMucYeuThich(sach.getBook_id(), user_id)
+                                .subscribeOn(Schedulers.io())
+                                .observeOn(AndroidSchedulers.mainThread())
+                                .subscribe(
+                                        sachYeuThichModel -> {
+                                            if(sachYeuThichModel.isSuccess()) {
+                                                Toast.makeText(getContext(), sachYeuThichModel.getMessage()+"", Toast.LENGTH_SHORT).show();
+                                            } else {
+                                                Toast.makeText(getContext(), sachYeuThichModel.getMessage()+"", Toast.LENGTH_SHORT).show();
+                                            }
+                                        }, throwable -> {
+                                            Log.e("API", "Lỗi gọi API: " + throwable.getMessage());
+                                            Toast.makeText(getContext(), "Có lỗi xảy ra, vui lòng thử lại!", Toast.LENGTH_SHORT).show();
+                                        }
+                                ));
+                    } else {
+                        btn_heart.setImageDrawable(emptyHeart);
+                        //XoaYeuThichSach();
+                        apiService = RetrofitClient.getInstance(Utils.BASE_URL).create(ApiService.class);
+                        compositeDisposable.add(apiService.XoaSachKhoiMucMucYeuThich(sach.getBook_id(), user_id)
+                                .subscribeOn(Schedulers.io())
+                                .observeOn(AndroidSchedulers.mainThread())
+                                .subscribe(
+                                        sachYeuThichModel -> {
+                                            if(sachYeuThichModel.isSuccess()) {
+                                                Toast.makeText(getContext(), sachYeuThichModel.getMessage()+"", Toast.LENGTH_SHORT).show();
+                                            } else {
+                                                Toast.makeText(getContext(), sachYeuThichModel.getMessage()+"", Toast.LENGTH_SHORT).show();
+                                            }
+                                        }, throwable -> {
+                                            Log.e("API", "Lỗi gọi API: " + throwable.getMessage());
+                                            Toast.makeText(getContext(), "Có lỗi xảy ra, vui lòng thử lại!", Toast.LENGTH_SHORT).show();
+                                        }
+                                ));
+                    }
+                } else {
+                    Log.d("Thoong baooo", "Drawable is null");
+                }
+            }
+        });
+
 
         //come danh gia
         LinearLayout DanhGiaButton = view.findViewById(R.id.button_danhgia);
@@ -116,6 +243,18 @@ public class ViewBookFragment extends Fragment {
         readbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                apiService = RetrofitClient.getInstance(Utils.BASE_URL).create(ApiService.class);
+                compositeDisposable.add(apiService.updateViewer(sach.getBook_id())
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(
+                                photoModel -> {
+                                    if(photoModel.isSuccess()) {
+                                    }
+                                }, throwable -> {
+
+                                }
+                        ));
                 Intent intent = new Intent(getActivity(),ReadingBookActivity.class);
                 intent.putExtra("book_id", bookId);
                 startActivity(intent);

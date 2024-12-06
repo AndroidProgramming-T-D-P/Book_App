@@ -1,7 +1,9 @@
 package com.example.bookapp.userInterface;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.InputType;
 import android.text.TextUtils;
@@ -116,6 +118,10 @@ public class LoginActivity extends AppCompatActivity {
                                userModel -> {
                                     if(userModel.isSuccess()){
                                         Utils.user_current = userModel.getResult().get(0);
+                                        SharedPreferences preferences = getSharedPreferences("UserPreferences", Context.MODE_PRIVATE);
+                                        SharedPreferences.Editor editor = preferences.edit();
+                                        editor.putInt("user_id",userModel.getResult().get(0).getUser_id());
+                                        editor.apply();
                                         Intent intent = new Intent(getApplicationContext(), TrangChuUser.class);
                                         startActivity(intent);
                                     }
