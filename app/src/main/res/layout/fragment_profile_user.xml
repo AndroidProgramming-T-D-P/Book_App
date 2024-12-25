@@ -92,6 +92,7 @@
                     android:orientation="horizontal">
 
                     <TextView
+                        android:id="@+id/txtShowUserName"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Tuấn prooooo No1"
@@ -100,14 +101,49 @@
 
                     <!-- Icon chỉnh sửa tên -->
                     <ImageView
+                        android:id="@+id/btnUpDateUserName"
                         android:layout_width="16dp"
                         android:layout_height="16dp"
                         android:layout_marginStart="4dp"
                         android:contentDescription="Edit Icon"
                         android:src="@drawable/ic_edit" />
                 </LinearLayout>
+
+                <!-- EditText và các nút (ẩn mặc định) -->
+                <LinearLayout
+                    android:id="@+id/editUserNameLayout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:visibility="gone"> <!-- Ban đầu ẩn -->
+
+                    <EditText
+                        android:id="@+id/etUserName"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:hint="Nhập tên mới"
+                        android:textColor="#FFFFFF"
+                        android:textSize="16sp" />
+
+                    <Button
+                        android:id="@+id/btnSave"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Lưu"
+                        android:layout_marginStart="8dp" />
+
+                    <Button
+                        android:id="@+id/btnCancel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Hủy"
+                        android:layout_marginStart="8dp" />
+                </LinearLayout>
+
                 <!-- Thông tin phụ -->
                 <TextView
+                    android:id="@+id/txtShowFirtEmail"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="(29042004)"
@@ -115,6 +151,7 @@
                     android:textSize="14sp" />
 
                 <TextView
+                    android:id="@+id/txtShowId"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="ID: 08072003"
@@ -170,6 +207,7 @@
                         android:src="@drawable/ic_email" />
 
                     <TextView
+                        android:id="@+id/txtShowEmail"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
@@ -216,10 +254,11 @@
                         android:src="@drawable/ic_settings" />
 
                     <TextView
+                        android:id="@+id/thanhviennhom"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
-                        android:text="Cài đặt"
+                        android:text="Thành viên nhóm"
                         android:textColor="#23a98e"
                         android:textSize="16sp" />
                 </LinearLayout>
@@ -239,6 +278,7 @@
                         android:src="@drawable/ic_password" />
 
                     <TextView
+                        android:id="@+id/gotoInterfaceDoiMatKhau"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"

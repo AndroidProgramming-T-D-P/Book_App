@@ -44,6 +44,7 @@ public class ReviewBookFragment extends Fragment {
     private int dem = 0;
     EditText comment;
 
+
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -160,12 +161,14 @@ public class ReviewBookFragment extends Fragment {
                                     danhGiaModel -> {
                                         if(danhGiaModel.isSuccess()){
                                             Toast.makeText(getContext(), danhGiaModel.getMessage(), Toast.LENGTH_SHORT).show();
+                                            getActivity().getSupportFragmentManager().popBackStack();
                                         }
                                         else {
                                             Toast.makeText(getContext(), danhGiaModel.getMessage(), Toast.LENGTH_SHORT).show();
+                                            getActivity().getSupportFragmentManager().popBackStack();
                                         }
                                     }, throwable -> {
-                                        //Toast.makeText(getContext(), throwable.getMessage(), Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(getContext(), throwable.getMessage(), Toast.LENGTH_SHORT).show();
                                     }
                             ));
                 }

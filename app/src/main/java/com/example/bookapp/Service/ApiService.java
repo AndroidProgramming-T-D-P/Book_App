@@ -4,6 +4,8 @@ import com.example.bookapp.models.DanhGiaModel;
 import com.example.bookapp.models.LoaiSachModel;
 import com.example.bookapp.models.Photo;
 import com.example.bookapp.models.PhotoModel;
+import com.example.bookapp.models.SachDaDoc;
+import com.example.bookapp.models.SachDaDocModel;
 import com.example.bookapp.models.SachYeuThichModel;
 
 import io.reactivex.disposables.Disposable;
@@ -112,6 +114,12 @@ public interface ApiService {
             @Field("book_id") int book_id
     );
 
+    @POST("getCountRating.php")
+    @FormUrlEncoded
+    Observable<DanhGiaModel> getCountRating(
+            @Field("book_id") int book_id
+    );
+
     @POST("InsertDanhGia.php")
     @FormUrlEncoded
     Observable<DanhGiaModel> ThemDanhGia(
@@ -121,5 +129,38 @@ public interface ApiService {
             @Field("mota") String mota
     );
 
+    @POST("getUserById.php")
+    @FormUrlEncoded
+    Observable<UserModel> LayThongTinuser(
+            @Field("user_id") int user_id
+    );
+
+    @POST("updateUserName.php")
+    @FormUrlEncoded
+    Observable<UserModel> CapNhatUserName(
+            @Field("userName") String userName,
+            @Field("user_id") int user_id
+    );
+
+    @POST("updatePassWord.php")
+    @FormUrlEncoded
+    Observable<UserModel> CapNhatPassWord(
+            @Field("userPassWord") String userPassWord,
+            @Field("user_id") int user_id
+    );
+
+
+    @POST("InsertSachDaDoc.php")
+    @FormUrlEncoded
+    Observable<SachDaDocModel> ThemSachVaoMucDaDoc(
+            @Field("book_id") int book_id,
+            @Field("user_id") int user_id
+    );
+
+    @POST("getSachDaDocTheoIdUser.php")
+    @FormUrlEncoded
+    Observable<PhotoModel> getSachDaDoc(
+            @Field("user_id") int user_id
+    );
 
 }

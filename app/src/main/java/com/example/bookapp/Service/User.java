@@ -5,7 +5,7 @@ import java.io.Serializable;
 public class User implements Serializable {
     int user_id;
     String userName;
-    String passWord;
+    String userPassWord;
     String email;
     int quyen;
 
@@ -25,12 +25,12 @@ public class User implements Serializable {
         this.userName = userName;
     }
 
-    public String getPassWord() {
-        return passWord;
+    public String getUserPassWord() {
+        return userPassWord;
     }
 
-    public void setPassWord(String passWord) {
-        this.passWord = passWord;
+    public void setUserPassWord(String userPassWord) {
+        this.userPassWord = userPassWord;
     }
 
     public String getEmail() {

@@ -140,9 +140,9 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        if(Utils.user_current.getEmail() != null && Utils.user_current.getPassWord() != null) {
+        if(Utils.user_current.getEmail() != null && Utils.user_current.getUserPassWord() != null) {
             EditTextEmail.setText(Utils.user_current.getEmail());
-            EditTextPassWord.setText(Utils.user_current.getPassWord());
+            EditTextPassWord.setText(Utils.user_current.getUserPassWord());
         }
     }
 

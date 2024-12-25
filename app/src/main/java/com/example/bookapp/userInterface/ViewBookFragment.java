@@ -55,6 +55,7 @@ public class ViewBookFragment extends Fragment implements ItemClickListener {
     TextView bookTitle;
     TextView author;
     TextView viewer;
+    TextView demsao1, demsao2;
     int bookId = 0;
     Button btn_docSach;
     public ApiService apiService;
@@ -119,6 +120,14 @@ public class ViewBookFragment extends Fragment implements ItemClickListener {
         bookTitle = view.findViewById(R.id.bookTitle);
         author = view .findViewById(R.id.author);
         recyclerViewDanhGia = view.findViewById(R.id.recyclerDanhGia);
+        demsao1 = view.findViewById(R.id.demsao1);
+        demsao2 = view.findViewById(R.id.ratingText);
+
+        ImageView star1 = view.findViewById(R.id.star1);
+        ImageView star2 = view.findViewById(R.id.star2);
+        ImageView star3 = view.findViewById(R.id.star3);
+        ImageView star4 = view.findViewById(R.id.star4);
+        ImageView star5 = view.findViewById(R.id.star5);
 
         //Lấy thông tin sách từ bundle
         Photo sach = (Photo) getArguments().getSerializable(ARG_SACH);
@@ -128,6 +137,36 @@ public class ViewBookFragment extends Fragment implements ItemClickListener {
         author.setText("Tác giả: " + sach.getAuthor());
         bookId = sach.getBook_id();
         Glide.with(getContext()).load(utils.BASE_URL + sach.getCover_image()).into(bookCover);
+
+        //Đếm sao
+        apiService = RetrofitClient.getInstance(Utils.BASE_URL).create(ApiService.class);
+        compositeDisposable.add(apiService.getCountRating(bookId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        danhGiaModel -> {
+                            if (danhGiaModel.isSuccess()){
+                                double sao = danhGiaModel.getResult().get(0).getDemsao();
+                                demsao1.setText(sao+"");
+                                demsao2.setText(sao+"/5");
+                                //làm sáng sao
+                                ImageView[] stars = {star1, star2, star3, star4, star5};
+
+                                for (int i = 0; i < stars.length; i++) {
+                                    if (i < Math.floor(sao)) {
+                                        // Làm sáng sao nếu nhỏ hơn số sao nguyên
+                                        stars[i].setImageResource(R.drawable.ic_star_filled);
+                                    } else if (i < sao) {
+                                        // Làm sáng sao một phần nếu nằm giữa số sao nguyên và trung bình
+                                        //stars[i].setImageResource(R.drawable.ic_star_half_filled);
+                                    } else {
+                                        // Sao còn lại không sáng
+                                        stars[i].setImageResource(R.drawable.ic_star_empty);
+                                    }
+                                }
+                            }
+                        }
+                ));
 
         //Yeeu thichs
         ImageView btn_heart = view.findViewById(R.id.icon_heart);
@@ -276,7 +315,24 @@ public class ViewBookFragment extends Fragment implements ItemClickListener {
         readbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //Toast.makeText(getContext(), user_id+"", Toast.LENGTH_SHORT).show();
                 apiService = RetrofitClient.getInstance(Utils.BASE_URL).create(ApiService.class);
+                //thêm vô mục đã đọc
+                compositeDisposable.add(apiService.ThemSachVaoMucDaDoc(sach.getBook_id(),user_id)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(
+                                sachDaDocModel -> {
+                                    if(sachDaDocModel.isSuccess()){
+                                        //Toast.makeText(getContext(), sachDaDocModel.getMessage(), Toast.LENGTH_SHORT).show();
+                                    } else {
+                                        //Toast.makeText(getContext(), sachDaDocModel.getMessage(), Toast.LENGTH_SHORT).show();
+                                    }
+                                }, throwable -> {
+                                    //Toast.makeText(getContext(), throwable.getMessage(), Toast.LENGTH_SHORT).show();
+                                }
+                        ));
+                //lấy id sách để truền qua giao diện đoọc
                 compositeDisposable.add(apiService.updateViewer(sach.getBook_id())
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())

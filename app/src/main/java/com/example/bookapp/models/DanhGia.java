@@ -7,6 +7,15 @@ public class DanhGia implements Serializable {
     int book_id;
     int user_id;
     String userName;
+    double demsao;
+
+    public double getDemsao() {
+        return demsao;
+    }
+
+    public void setDemsao(double demsao) {
+        this.demsao = demsao;
+    }
 
     public String getUserName() {
         return userName;

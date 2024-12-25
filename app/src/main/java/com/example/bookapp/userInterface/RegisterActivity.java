@@ -88,15 +88,18 @@ CompositeDisposable compositeDisposable = new CompositeDisposable();
         } else {
             if(str_pass.equals(str_repass)) {
                 //Post Data
-                compositeDisposable.add(apiService.dangki(str_email, str_pass, str_repass)
+                compositeDisposable.add(apiService.dangki(str_email, str_pass, str_username)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(
                             userModel -> {
                                 if(userModel.isSuccess()) {
                                     Toast.makeText(getApplicationContext(), userModel.getMessage(), Toast.LENGTH_SHORT).show();
+
                                     Utils.user_current.setEmail(str_email);
-                                    Utils.user_current.setPassWord(str_pass);
+                                    Utils.user_current.setUserPassWord(str_pass);
+                                    Utils.user_current.setUserName(str_username);
+
                                     Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
                                     startActivity(intent);
                                     finish();
